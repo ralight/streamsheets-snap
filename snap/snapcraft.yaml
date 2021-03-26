@@ -1,0 +1,184 @@
+name: streamsheets
+version: '2.2'
+summary: A no-code platform for processing streaming data in a spreadsheet interface
+description: |
+  Streamsheets are spreadsheets that can process real time streaming data from
+  a variety of sources including MQTT, REST, Kafka and more. With an interface
+  that is familiar to any spreadsheet user, it is possible to quickly and
+  easily create charts and dashboards for monitoring sensors, controlling
+  processes, working with home automation systems, or anything that your
+  imagination allows.
+
+base: core20
+grade: stable
+confinement: strict
+
+package-repositories:
+  - type: apt
+    key-id: 20691EEC35216C63CAF66CE1656408E390CFB1F5
+    url: https://repo.mongodb.org/apt/ubuntu
+    suites: [focal/mongodb-org/4.4]
+    components: [multiverse]
+
+apps:
+  gateway:
+    command: gateway.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  service-machines:
+    command: service-machines.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  service-graphs:
+    command: service-graphs.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  service-streams:
+    command: service-streams.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  nginx:
+    command: nginx.sh
+    daemon: forking
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  internal-mongodb:
+    command: mongodb.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  internal-mosquitto:
+    command: mosquitto.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+  internal-redis:
+    command: redis.sh
+    daemon: simple
+    restart-condition: always
+    plugs: [network, network-bind]
+
+parts:
+  mongodb:
+    # streamsheets-internal-mongodb
+    plugin: nil
+    stage-packages:
+      - mongodb-org-server
+
+  mongodb-config:
+    plugin: dump
+    source: snap/local/mongodb/
+    prime:
+      - mongodb.conf
+      - mongodb.sh
+
+  scripts:
+    plugin: dump
+    source: snap/local/streamsheets/
+    prime:
+      - gateway.sh
+      - service-graphs.sh
+      - service-machines.sh
+      - service-streams.sh
+      - wait-for-database.sh
+
+  mosquitto:
+    # streamsheets-internal-broker
+    plugin: make
+    make-parameters: ["prefix=/usr", "WITH_CJSON=no", "CFLAGS='-Wall -ggdb -O2 -I$SNAPCRAFT_STAGE'"]
+    source: https://github.com/eclipse/mosquitto
+    source-type: git
+    source-branch: master
+
+    build-packages:
+      - libssl-dev
+      - xsltproc
+      - docbook-xsl
+      - gcc
+      - g++
+    stage-packages:
+      - libssl1.1
+      - ca-certificates
+    prime:
+      - usr/sbin/mosquitto
+
+  mosquitto-config:
+    plugin: dump
+    source: snap/local/mosquitto/
+    prime:
+      - mosquitto.conf
+      - mosquitto.sh
+      - mosquitto.passwd
+
+  nginx:
+    plugin: autotools
+    source: https://nginx.org/download/nginx-1.17.8.tar.gz
+    build-packages:
+      - libpcre3-dev
+      - libssl-dev
+      - zlib1g-dev
+    autotools-configure-parameters:
+      - --conf-path=/snap/streamsheets/current/nginx.conf
+      - --error-log-path=/var/snap/streamsheets/current/nginx/error.log
+      - --http-client-body-temp-path=/var/snap/streamsheets/current/nginx/body
+      - --http-fastcgi-temp-path=/var/snap/streamsheets/current/nginx/fastcgi
+      - --http-log-path=/var/snap/streamsheets/current/nginx/access.log
+      - --http-proxy-temp-path=/var/snap/streamsheets/current/nginx/proxy
+      - --http-scgi-temp-path=/var/snap/streamsheets/current/nginx/scgi
+      - --http-uwsgi-temp-path=/var/snap/streamsheets/current/nginx/uwsgi
+      - --lock-path=/var/snap/streamsheets/current/nginx/nginx.lock
+      - --pid-path=/var/snap/streamsheets/current/nginx/nginx.pid
+      - --prefix=/usr
+      - --with-debug
+      - --with-http_ssl_module
+      - --with-threads
+
+    organize:
+      usr/local/nginx/sbin: bin
+    stage-packages:
+      - libssl1.1
+
+  nginx-config:
+    plugin: dump
+    source: snap/local/nginx/
+    prime:
+      - nginx.conf
+      - nginx.sh
+
+  redis:
+    # internal-redis
+    plugin: nil
+    stage-packages:
+      - redis-server
+      - libjemalloc2
+
+  redis-config:
+    plugin: dump
+    source: snap/local/redis/
+    prime:
+      - redis.conf
+      - redis.sh
+
+  node:
+    plugin: nil
+    stage-packages:
+      - nodejs
+
+  streamsheets:
+    plugin: dump
+    source: streamsheets
+
+  streamsheets-config:
+    plugin: dump
+    source: config
