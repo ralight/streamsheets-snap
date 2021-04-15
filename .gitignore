@@ -1,5 +1,5 @@
 parts/
 prime/
 stage/
-streamsheets/
 *.snap
+/streamsheets
