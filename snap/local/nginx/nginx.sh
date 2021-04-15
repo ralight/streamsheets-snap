@@ -2,6 +2,6 @@
 
 CONFIG_FILE="$SNAP/nginx.conf"
 
-mkdir -p /var/snap/streamsheets/current/nginx/body
+mkdir -p $SNAP_DATA/nginx/body
 
 $SNAP/usr/sbin/nginx -c $CONFIG_FILE
