@@ -130,7 +130,7 @@ parts:
       - libssl-dev
       - zlib1g-dev
     autotools-configure-parameters:
-      - --conf-path=/snap/streamsheets/current/nginx.conf
+      - --conf-path=/var/snap/streamsheets/current/nginx.conf
       - --error-log-path=/var/snap/streamsheets/current/nginx/error.log
       - --http-client-body-temp-path=/var/snap/streamsheets/current/nginx/body
       - --http-fastcgi-temp-path=/var/snap/streamsheets/current/nginx/fastcgi

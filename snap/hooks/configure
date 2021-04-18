@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+NGINX_CONFIG_INPUT=$SNAP/nginx.conf
+NGINX_CONFIG_OUTPUT=$SNAP_DATA/nginx.conf
+
+_refresh_nginx_port() {
+    value="$1"
+    sed "s/NGINX_PORT/$value/" $NGINX_CONFIG_INPUT >${NGINX_CONFIG_OUTPUT}
+}
+
+update_port_in_config() {
+    if ! value=$(snapctl get port) || [ -z "$value" ]; then
+        _refresh_nginx_port "8081"
+    else
+        _refresh_nginx_port "$value"
+    fi
+}
+
+# Start here, update config we desire
+update_port_in_config

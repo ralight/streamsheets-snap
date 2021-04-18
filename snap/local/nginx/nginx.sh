@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONFIG_FILE="$SNAP/nginx.conf"
+CONFIG_FILE="$SNAP_DATA/nginx.conf"
 
 mkdir -p $SNAP_DATA/nginx/body
 

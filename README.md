@@ -13,6 +13,16 @@ docker image, for example.
 Also assumes that the streamsheets network components and MQTT.js have been
 modified to use unix sockets for their communication.
 
+## Configuration
+
+By default streamsheets is available on port 8081. This can be changed with the
+following:
+
+```
+sudo snap set streamsheets port=8082
+sudo systemctl restart snap.streamsheets.nginx
+```
+
 ## TODO
 
 * Update nginx to use https://snapcraft.io/docs/snap-layouts with distro
