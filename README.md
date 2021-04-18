@@ -13,9 +13,14 @@ docker image, for example.
 Also assumes that the streamsheets network components and MQTT.js have been
 modified to use unix sockets for their communication.
 
-See: https://github.com/mqttjs/MQTT.js/pull/1094 for MQTT.js
+## TODO
 
-Streamsheets modifications:
+* Update nginx to use https://snapcraft.io/docs/snap-layouts with distro
+  package instead of manually compiling.
+
+## Modifications
+
+See: https://github.com/mqttjs/MQTT.js/pull/1094 for MQTT.js
 
 packages/rest-server-core/src/server/RESTServer.js:
 ```
