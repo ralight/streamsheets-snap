@@ -1,5 +1,5 @@
 name: streamsheets
-version: '2.3.1'
+version: '2.3.2'
 summary: A no-code platform for processing streaming data in a spreadsheet interface
 description: |
   Streamsheets are spreadsheets that can process real time streaming data from
@@ -13,12 +13,12 @@ base: core20
 grade: stable
 confinement: strict
 
-package-repositories:
-  - type: apt
-    key-id: 20691EEC35216C63CAF66CE1656408E390CFB1F5
-    url: https://repo.mongodb.org/apt/ubuntu
-    suites: [focal/mongodb-org/4.4]
-    components: [multiverse]
+# Mongodb doesn't support 32-bit
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+  - build-on: ppc64el
+  - build-on: s390x
 
 apps:
   gateway:
@@ -71,10 +71,13 @@ apps:
 
 parts:
   mongodb:
-    # streamsheets-internal-mongodb
     plugin: nil
     stage-packages:
-      - mongodb-org-server
+      - mongodb-server
+    prime:
+      - -usr/bin/mongo
+      - -usr/bin/mongoperf
+      - -usr/bin/mongos
 
   mongodb-config:
     plugin: dump

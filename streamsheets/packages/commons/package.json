@@ -1,0 +1,49 @@
+{
+  "name": "@cedalo/commons",
+  "version": "2.3.0",
+  "description": "Common utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --forceExit",
+    "lint": "./node_modules/.bin/eslint ."
+  },
+  "author": "Cedalo AG",
+  "license": "EPL-2.0",
+  "homepage": "https://github.com/cedalo/streamsheets/tree/master/packages/commons",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedalo/streamsheets.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cedalo/streamsheets/issues"
+  },
+  "dependencies": {
+    "@cedalo/logger": "2.3.0",
+    "rfdc": "1.1.4"
+  },
+  "devDependencies": {
+    "jest": "21.2.1",
+    "jest-cli": "21.2.1"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 20,
+        "functions": 20,
+        "lines": 20,
+        "statements": 20
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+export declare const USERNAME_IN_USE: string;
+export declare const EMAIL_IN_USE: string;
+export declare const USER_NOT_FOUND: string;
+export declare const USERNAME_INVALID: string;
+export declare const EMAIL_INVALID: string;
+export declare const PASSWORD_INVALID: string;
+export declare const LOCALE_INVALID: string;
+export declare const NOT_ALLOWED: string;
+export declare const CONFLICT: string;
+export declare const INVALID: string;

@@ -1,0 +1,266 @@
+{
+	"SIMPLE": {
+		"metadata": {
+			"name": "SIMPLE",
+			"sender": "Cedalo"
+		},
+		"data": {
+			"Kundenname": {
+				"Vorname": "Max",
+				"Nachname": "Mustermann"
+			},
+			"Kundennummer": 123456789,
+			"Warenkorb": [1, 2, 3],
+			"Positionen": [
+				{
+					"PosNr": 1,
+					"Artikelnr": 1234,
+					"Preis": 80.0
+				},
+				{
+					"PosNr": 2,
+					"Artikelnr": 12345,
+					"Preis": 59.99
+				},
+				{
+					"PosNr": 3,
+					"Artikelnr": 4535,
+					"Preis": 45.32
+				}
+			]
+		}
+	},
+	"SIMPLE2": {
+		"metadata": {
+			"name": "SIMPLE2",
+			"sender": "Cedalo",
+			"Teile": [
+				{
+					"Nr": 1,
+					"Preis": 11.11
+				},
+				{
+					"Nr": 2,
+					"Preis": 22.22
+				}
+			]
+		},
+		"data": {
+			"Kundenname": {
+				"Anrede": "Herr",
+				"Vorname": "Anton",
+				"Nachname": "Mustermann"
+			},
+			"Kundennummer": 987654321,
+			"Positionen": []
+		}
+	},
+	"TEST1": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": [
+			{
+				"Artikelnummer": 1231,
+				"Produktname": "Produkt A",
+				"Preis": 23.43,
+				"Mwst": 0.19,
+				"Gesamtpreis": 4.4517
+			},
+			{
+				"Artikelnummer": 4321,
+				"Produktname": "Produkt B",
+				"Preis": 12.34,
+				"Mwst": 0.19,
+				"Gesamtpreis": 2.3446
+			},
+			{
+				"Artikelnummer": 5443,
+				"Produktname": "Produkt C",
+				"Preis": 12.65,
+				"Mwst": 0.19,
+				"Gesamtpreis": 2.4035
+			},
+			{
+				"Artikelnummer": 1254,
+				"Produktname": "Produkt D",
+				"Preis": 34.54,
+				"Mwst": 0.19,
+				"Gesamtpreis": 6.5626
+			}
+		]
+	},
+	"TEST3": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": [
+			[ "Artikelnummer", "Produktname", "Preis", "Mwst", "Gesamtpreis" ],
+			[ 1231, "Produkt A", 23.43, 0.19, 4.4517 ],
+			[ 4321, "Produkt B", 12.34, 0.19, 2.3446 ],
+			[ 5443, "Produkt C", 12.65, 0.19, 2.4035 ],
+			[ 1254, "Produkt D", 34.54, 0.19, 6.5626 ]
+		]
+	},
+	"TEST3a": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data":
+			{
+				"0": "Artikelnummer",
+				"1": "Produktname",
+				"2": "Preis",
+				"3": "Mwst",
+				"4": "Gesamtpreis"
+			}
+	},
+	"TEST3b": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data":
+			{
+				"0": 1234,
+				"1": 5678,
+				"2": 9012,
+				"3": 3456,
+				"4": 7890
+			}
+	},
+	"TEST3c": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": [ "M1200", "Cedalo MQTT Broker", 1000, 1, 1000]
+	},
+	"TEST3d": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": [[ "M1200", "Cedalo MQTT Broker", 1000, 1, 1000]]
+	},
+	"TEST5": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": [
+			{ 
+				"": "Umsatz",
+				"Jan": 100,
+				"Feb": 200,
+				"März": 300
+			},
+			{ 
+				"": "Kosten",
+				"Jan": 101,
+				"Feb": 201,
+				"März": 301
+			},
+			{ 
+				"": "Ertrag",
+				"Jan": 102,
+				"Feb": 202,
+				"März": 302
+			}
+		]
+	},
+	"TEST7": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": {
+			"0": [ "", "Jan", "Feb", "März"],
+			"1": [ "Umsatz", 100, 200, 300 ]
+		}
+	},
+	"TEST8": {
+		"metadata": {
+			"ticket": "DL-4033"
+		},
+		"data": [
+			[ "", "Umsatz", "Kosten", "Ertrag"],
+			[ "Jan", 100, 101, 102],
+			[ "Feb", 200, 201, 202],
+			[ "März", 300, 301, 302]
+		]
+	},
+	"RECURSIVE": {
+		"data": {
+			"measurements": [
+				{
+					"ts": "2020-02-11",
+					"series": {
+						"time": [0, 23, 24],
+						"temperature": [45.4231, 46.4222, 44.2432]
+					}
+				},
+				{
+					"ts": "2020-02-12",
+					"series": {
+						"time": [1, 46, 48],
+						"temperature": [90.4231, 92.4222, 88.2432]
+					}
+				}
+			]
+		}
+	},
+	"RECURSIVE_NULL": {
+		"Action": "checkouts/create",
+		"OrderToken": "5872141e3ec679702431e6404cfc9d96",
+		"CartToken": "f32579d24ae731ba7179ec1e58879a61",
+		"LineItems": [
+			{
+				"applied_discounts": [],
+				"key": "2561a332c166390e653c43459ecbacba",
+				"destination_location_id": null,
+				"fulfillment_service": "manual",
+				"gift_card": false,
+				"grams": 0,
+				"origin_location_id": 1775311913097,
+				"product_id": 4645186896009,
+				"properties": [],
+				"quantity": 1,
+				"requires_shipping": false,
+				"sku": "1",
+				"tax_lines": [],
+				"taxable": false,
+				"title": "Streamsheets",
+				"variant_id": 32637062938761,
+				"variant_title": "",
+				"variant_price": "10.00",
+				"vendor": "cedalocloud",
+				"user_id": null,
+				"unit_price_measurement": {
+					"measured_type": null,
+					"quantity_value": null,
+					"quantity_unit": null,
+					"reference_value": null,
+					"reference_unit": null
+				},
+				"country_hs_codes": [],
+				"country_code_of_origin": null,
+				"province_code_of_origin": null,
+				"harmonized_system_code": null,
+				"compare_at_price": null,
+				"line_price": "10.00",
+				"price": "10.00",
+				"presentment_title": "Streamsheets"
+			}
+		]
+	},
+	"SPECIAL_CHARS": {
+		"data": {
+			"[0:0]": -0.616,
+			"[0:0].ID": "[0:0]",
+			"[0:0].Name": "Virtual\\\\Sin(T())",
+			"[0:0].Unit": "UnitName",
+			"[1:0]": -0.616,
+			"[1:0].ID": "[1:0]",
+			"[1:0].Name": "Sin(T())",
+			"[1:0].Unit": "",
+			"Timestamp": "2020-03-30T10:35:23.9805224Z",
+			"Identifier": "ibaPDAMQTTstore200309122136"
+		}
+	}
+}

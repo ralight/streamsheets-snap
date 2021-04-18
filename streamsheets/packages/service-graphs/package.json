@@ -1,0 +1,70 @@
+{
+  "name": "@cedalo/service-graphs",
+  "version": "2.3.0",
+  "description": "A service for managing graphs.",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "npx webpack --config webpack.config.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/jest --runInBand --forceExit",
+    "retrieve-build-number": "node ./scripts/retrieve-build-number.js",
+    "start": "node ./start.js",
+    "start:min": "node start.min.js",
+    "start-debug": "node --inspect=0.0.0.0 ./start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedalo/streamsheets.git"
+  },
+  "author": "Cedalo AG",
+  "bugs": {
+    "url": "https://github.com/cedalo/streamsheets/issues"
+  },
+  "homepage": "https://github.com/cedalo/streamsheets/tree/master/packages/service-graphs",
+  "dependencies": {
+    "@cedalo/error-codes": "2.3.0",
+    "@cedalo/functions": "2.3.0",
+    "@cedalo/id-generator": "2.3.0",
+    "@cedalo/logger": "2.3.0",
+    "@cedalo/messages": "2.3.0",
+    "@cedalo/messaging-client": "2.3.0",
+    "@cedalo/protocols": "2.3.0",
+    "@cedalo/repository": "2.3.0",
+    "@cedalo/service-core": "2.3.0",
+    "ioredis": "4.6.2",
+    "@cedalo/jsg-core": "2.3.0"
+  },
+  "devDependencies": {
+    "jest": "24.0.0",
+    "jest-cli": "24.0.0",
+    "terser-webpack-plugin": "1.2.2",
+    "webpack": "4.29.1",
+    "webpack-cli": "3.2.3",
+    "webpack-node-externals": "1.7.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  },
+  "license": "EPL-2.0"
+}

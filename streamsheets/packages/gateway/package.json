@@ -1,0 +1,114 @@
+{
+  "name": "@cedalo/gateway",
+  "version": "2.3.0",
+  "description": "Gateway server",
+  "main": "out/index.js",
+  "types": "index.ts",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "bundle": "npx webpack --config webpack.config.js",
+    "test": "jest --verbose --forceExit",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --forceExit --coverage",
+    "lint": "./node_modules/.bin/eslint .",
+    "retrieve-build-number": "node ./scripts/retrieve-build-number.js",
+    "start": "node start.js",
+    "start:min": "node start.min.js",
+    "start-debug": "node --inspect=0.0.0.0 ./start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedalo/streamsheets.git"
+  },
+  "author": "Cedalo AG",
+  "bugs": {
+    "url": "https://github.com/cedalo/streamsheets/issues"
+  },
+  "homepage": "https://github.com/cedalo/streamsheets/tree/master/packages/gateway",
+  "dependencies": {
+    "@cedalo/commons": "2.3.0",
+    "@cedalo/error-codes": "2.3.0",
+    "@cedalo/id-generator": "2.3.0",
+    "@cedalo/logger": "2.3.0",
+    "@cedalo/messages": "2.3.0",
+    "@cedalo/messaging-client": "2.3.0",
+    "@cedalo/protocols": "2.3.0",
+    "@cedalo/repository": "2.3.0",
+    "@cedalo/service-core": "2.3.0",
+    "@cedalo/service-streams": "2.3.0",
+    "@cedalo/util": "2.3.0",
+    "apollo-server-express": "2.9.16",
+    "axios": "0.21.1",
+    "bcryptjs": "2.4.3",
+    "body-parser": "1.18.3",
+    "compression": "1.7.1",
+    "convict": "5.0.0",
+    "cors": "2.8.4",
+    "express": "4.16.4",
+    "express-session": "1.16.1",
+    "graphql": "14.5.8",
+    "graphql-fields": "2.0.3",
+    "graphql-type-json": "0.3.1",
+    "http-errors": "1.5.1",
+    "ioredis": "4.6.2",
+    "jasmine-expect": "^4.0.3",
+    "jsonwebtoken": "7.4.1",
+    "mkdirp": "0.5.1",
+    "mongodb": "3.0.11",
+    "morgan": "1.9.1",
+    "multer": "^1.4.2",
+    "passport": "0.3.2",
+    "passport-jwt": "2.2.1",
+    "supertest": "^4.0.2",
+    "swagger-express-middleware": "^2.0.2",
+    "uuid": "3.3.2",
+    "ws": "7.1.0"
+  },
+  "devDependencies": {
+    "@cedalo/jsg-core": "2.3.0",
+    "@cedalo/machine-core": "2.3.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express": "4.16.1",
+    "@types/ioredis": "4.14.0",
+    "@types/jest": "25.1.0",
+    "@types/jsonwebtoken": "7.2.8",
+    "@types/mongodb": "3.0.11",
+    "@types/passport-jwt": "2.0.25",
+    "jest": "25.1.0",
+    "mongodb-memory-server": "5.2.11",
+    "terser-webpack-plugin": "1.2.2",
+    "ts-jest": "25.0.0",
+    "typescript": "3.7.5",
+    "webpack": "4.29.1",
+    "webpack-cli": "3.2.3",
+    "webpack-node-externals": "1.7.2"
+  },
+  "unmockedModulePathPatterns": [
+    "jasmine-expect"
+  ],
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/test/"
+    ],
+    "testEnvironment": "node",
+    "coverageThreshold": {
+      "global": {
+        "branches": 2,
+        "functions": 5,
+        "lines": 20,
+        "statements": 20
+      }
+    },
+    "preset": "ts-jest/presets/js-with-ts"
+  },
+  "license": "EPL-2.0"
+}
