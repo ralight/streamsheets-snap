@@ -3,12 +3,12 @@
 To build:
 
 ```
-snapcraft  --enable-experimental-package-repositories --provider lxd
+snapcraft  --provider lxd
 ```
 
-Assumes that there is a directory `streamsheets` in the root of the repository,
-which contains the deployed streamsheets installation as from the streamsheets
-docker image, for example.
+This uses the `streamsheets` directory which comes from the Docker installation
+of streamsheets, but with some unnecessary files removed using the `tidy.sh`
+script.
 
 Also assumes that the streamsheets network components and MQTT.js have been
 modified to use unix sockets for their communication.
