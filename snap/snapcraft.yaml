@@ -182,7 +182,3 @@ parts:
   streamsheets:
     plugin: dump
     source: streamsheets
-
-  streamsheets-config:
-    plugin: dump
-    source: config
