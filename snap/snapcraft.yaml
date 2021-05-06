@@ -175,9 +175,11 @@ parts:
       - redis.sh
 
   node:
-    plugin: nil
-    stage-packages:
-      - nodejs
+    plugin: npm
+    npm-node-version: 14.16.1
+    source: dummy
+    prime:
+      - -include/
 
   streamsheets:
     plugin: dump
