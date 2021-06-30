@@ -1,14 +1,19 @@
+import MachineServiceMessageRouter from '../services/gateway/MachineServiceMessageRouter';
 import { ServiceResponse, WSRequest } from '../streamsheets';
+declare type ConnectionContext = {
+    machineRouter?: MachineServiceMessageRouter;
+};
 export default class ServerConnection {
     private id;
     private type;
     private serviceType;
+    private context;
     private timeout;
     private _pendingRequests;
     private messagingClient;
     private _redisConnection?;
     private _evHandler;
-    constructor(type: string, serviceType: string);
+    constructor(type: string, serviceType: string, context?: ConnectionContext);
     set eventHandler(handler: (event: import("../streamsheets").EventData) => any);
     get eventHandler(): (event: import("../streamsheets").EventData) => any;
     confirmMachineStep(machineId: string): void;
@@ -21,3 +26,4 @@ export default class ServerConnection {
     handleMessage(message: string, topic: string): any;
     _requestTriggeredFromThisConnection(options: any): boolean;
 }
+export {};

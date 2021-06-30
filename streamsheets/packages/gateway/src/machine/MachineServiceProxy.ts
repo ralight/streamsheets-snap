@@ -12,8 +12,11 @@ import { MessagingClient } from '@cedalo/messaging-client';
 import { Topics } from '@cedalo/protocols';
 import { MessagingRequestHelper } from '@cedalo/service-core';
 import {
+	AddInboxMessageRequest,
+	DeleteMachineRequest,
 	ID,
 	LoadMachineRequest,
+	MachineUpdateExtensionSettingsRequest,
 	PauseMachineRequest,
 	StartMachineRequest,
 	UnloadMachineRequest
@@ -52,6 +55,16 @@ export class MachineServiceProxy {
 		return { unloaded: result.machine.unloaded };
 	}
 
+	async delete(id: ID) {
+		const message: DeleteMachineRequest = {
+			type: 'machine_delete',
+			requestId: Math.random(),
+			machineId: id
+		};
+		const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
+		return { deleted: result.machine.deleted };
+	}
+
 	async start(id: ID) {
 		const message: StartMachineRequest = {
 			type: 'machine_start',
@@ -68,6 +81,33 @@ export class MachineServiceProxy {
 			requestId: Math.random(),
 			machineId: id
 		};
+		const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
+		return result;
+	}
+
+	async addInboxMessage(id: ID, streamsheetId: ID, inboxMessage: any, metadata: object) {
+		const message: AddInboxMessageRequest = {
+			type: 'add_inbox_message',
+			requestId: Math.random(),
+			machineId: id,
+			streamsheetId,
+			message: inboxMessage,
+			metadata
+		};
+
+		const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
+		return result;
+	}
+
+	async updateExtensionSettings(id: ID, extensionId: string, settings: object) {
+		const message: MachineUpdateExtensionSettingsRequest = {
+			type: 'machine_update_extension_settings',
+			requestId: Math.random(),
+			machineId: id,
+			extensionId,
+			settings
+		};
+
 		const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
 		return result;
 	}

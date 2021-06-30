@@ -69,6 +69,8 @@ const checkAndTransformMachine = (machine) => {
 	return undefined;
 };
 
+const isEmptyCell = (celldescr) =>
+	celldescr.formula == null && celldescr.value == null;
 
 /**
  * An machine repository which stores the machines in a MongoDB.
@@ -220,6 +222,10 @@ module.exports = class MongoDBMachineRepository extends mix(
 		return this.updateDocument(this.collection, id, { 'settings.isOPCUA': isOPCUA });
 	}
 
+	updateMachineExtensionSettings(id, extensionId, settings) {
+		return this.updateDocument(this.collection, id, { [`extensionSettings.${extensionId}`]: settings });
+	}
+
 	updateMachinePreviewImage(id, previewImage) {
 		return this.updateDocument(this.collection, id, { previewImage });
 	}
@@ -282,6 +288,32 @@ module.exports = class MongoDBMachineRepository extends mix(
 
 	updateMachineNamedCells(id, namedCells = {}) {
 		return this.updateDocument(this.collection, id, { namedCells });
+	}
+
+	updateCell(machineId, streamsheetId, cellDescriptor) {
+		const { reference, formula, value, type } = cellDescriptor;
+		if (!reference || (!formula && !type && !value)) {
+			return Promise.reject(
+				new Error('Failed to update cell: wrong cell descriptor!')
+			);
+		}
+		const delIt = isEmptyCell(cellDescriptor);
+		const selector = { _id: machineId, 'streamsheets.id': streamsheetId };
+		const update = {};
+		if (delIt) {
+			update.$unset = {};
+			update.$unset[`streamsheets.$.sheet.cells.${reference}`] = '';
+		} else {
+			deleteCellProps(cellDescriptor);
+			update.$set = {};
+			update.$set[
+				`streamsheets.$.sheet.cells.${reference}`
+			] = cellDescriptor;
+		}
+		return this.db
+			.collection(this.collection)
+			.updateOne(selector, update)
+			.then((resp) => resp.result && resp.result.ok);
 	}
 
 	partiallyUpdateCells(machineId, streamsheetId, cells) {
@@ -359,6 +391,30 @@ module.exports = class MongoDBMachineRepository extends mix(
 		return this.db
 			.collection(this.collection)
 			.updateOne(selector, update)
+			.then((resp) => resp.result && resp.result.ok);
+	}
+
+	updateSheetProperties(machineId, streamsheetId, properties) {
+		const selector = { _id: machineId, 'streamsheets.id': streamsheetId };
+		const update = {};
+		update.$set = {};
+		if (properties) update.$set['streamsheets.$.sheet.properties'] = properties;
+		return this.db
+			.collection(this.collection)
+			.updateOne(selector, update)
+			.then((resp) => resp.result && resp.result.ok);
+	}
+
+	deleteCells(machineId, streamsheetId, cellDescriptors) {
+		const cells = 'streamsheets.$.sheet.cells.';
+		const selector = { _id: machineId, 'streamsheets.id': streamsheetId };
+		const unset = {};
+		cellDescriptors.forEach((descr) => {
+			unset[`${cells}${descr.reference}`] = '';
+		});
+		return this.db
+			.collection(this.collection)
+			.updateOne(selector, { $unset: unset })
 			.then((resp) => resp.result && resp.result.ok);
 	}
 

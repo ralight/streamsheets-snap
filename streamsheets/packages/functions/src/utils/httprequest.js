@@ -74,7 +74,7 @@ const addValue = (fromObj) => (toObj, key) => {
 };
 const extract = (keys, fromObj) => keys.reduce(addValue(fromObj), {});
 const getErrorData = (error) => extract(ERRORDATA, error);
-const getResultData = (result) => extract(DATA, result);
+const getResultData = (result) => result.data || {};
 const createResult = (extractData) => (requestId, obj) => {
 	const data = extractData(obj);
 	const metadata = extract(METADATA, obj);

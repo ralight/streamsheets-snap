@@ -21,7 +21,7 @@ const MachineServerRequestHandlers = require('../handlers/MachineServerRequestHa
 
 const config = require('../../config/config');
 
-const machineRepository = new MongoDBMachineRepository(config.mongodb);
+// const machineRepository = new MongoDBMachineRepository(config.mongodb);
 
 const STREAM_FUNCTIONS_TOPIC = `${Topics.SERVICES_STREAMS_EVENTS}/functions`;
 
@@ -44,7 +44,13 @@ const toMapObject = (arr, key = 'name') =>
 		delete val[key];
 		return map;
 	}, {}) : {};
-
+const byRef = (obj, cell) => {
+	const ref = cell.ref;
+	obj[`${ref.col}${ref.row}`] = cell;
+	delete cell.ref;
+	delete cell.reference;
+	return obj;
+};
 const sheetDescriptor = ({ id, cells, names, namedCells }) => ({
 	id,
 	cells: toMapObject(cells, 'reference'),
@@ -68,17 +74,17 @@ module.exports = class MachineService extends MessagingService {
 	}
 
 	async _preStart() {
-		// include editable-web-component:
-		// RepositoryManager.init({
-		// 	graphRepository: new MongoDBGraphRepository(config.mongodb),
-		// 	machineRepository: new MongoDBMachineRepository(config.mongodb)
-		// });
+		// include serverside-formats:
+		RepositoryManager.init({
+			// graphRepository: new MongoDBGraphRepository(config.mongodb),
+			machineRepository: new MongoDBMachineRepository(config.mongodb)
+		});
 		// ~
 
-		// delete editable-web-component:
-		RepositoryManager.init({
-			machineRepository
-		});
+		// delete serverside-formats:
+		// RepositoryManager.init({
+		// 	machineRepository
+		// });
 		// ~
 
 		await RepositoryManager.connectAll();
@@ -149,6 +155,8 @@ module.exports = class MachineService extends MessagingService {
 						const errorObject = requestHandler.reject(message, errorMessage);
 						errorObject.error.reqType = message.type;
 						this.publishMessage(Topics.ERRORS_GLOBAL, errorObject);
+					} else {
+						this.publishMessage(Topics.SERVICES_MACHINES_OUTPUT, error);
 					}
 				}
 			} else if (isRequestMessage(message)) {
@@ -278,6 +286,10 @@ module.exports = class MachineService extends MessagingService {
 				logger.info(`PersistenceService: persist new machine opcua state: ${event.isOPCUA}`);
 				await RepositoryManager.machineRepository.updateMachineOPCUA(event.srcId, event.isOPCUA);
 				break;
+			case MachineServerMessagingProtocol.EVENTS.MACHINE_EXTENSION_SETTINGS_EVENT:
+				logger.info(`PersistenceService: persist new machine extension settings for extension "${event.extensionId}": ${event.settings}`);
+				await RepositoryManager.machineRepository.updateMachineExtensionSettings(event.srcId, event.extensionId, event.settings);
+				break;
 			case MachineServerMessagingProtocol.EVENTS.NAMED_CELLS_EVENT:
 				logger.info(`PersistenceService: persist new machine named cells: ${event.namedCells}`);
 				await RepositoryManager.machineRepository.updateMachineNamedCells(event.srcId, event.namedCells);
@@ -294,21 +306,6 @@ module.exports = class MachineService extends MessagingService {
 				logger.info('PersistenceService: persist changed sheet cells...');
 				await RepositoryManager.machineRepository.updateCells(event.machineId, event.srcId, event.cells);
 				break;
-
-			// include editable-web-component:
-			// case MachineServerMessagingProtocol.EVENTS.SHEET_UPDATE_EVENT: {
-			// 	logger.info('PersistenceService: persist updated sheet...');
-			// 	const { machineId, srcId, sheet } = event;
-			// 	const { graphCells, namedCells, properties } = sheet;
-			// 	await RepositoryManager.machineRepository.updateSheet(
-			// 		machineId,
-			// 		srcId,
-			// 		{ cells: toMapObject(sheet.cells, 'reference'), properties, graphCells, namedCells }
-			// 	);
-			// 	break;
-			// }
-			// ~
-
 			default:
 				break;
 		}
@@ -384,7 +381,8 @@ module.exports = class MachineService extends MessagingService {
 	async _handleCommandMessage(message) {
 		const { response } = message;
 		switch (response.command) {
-			case 'command.DeleteCellsCommand':
+			// currently not handled by machine-server!
+			// case 'command.DeleteCellsCommand':
 			case 'command.DeleteCellContentCommand':
 			case 'command.SetCellDataCommand':
 			case 'command.SetCellLevelsCommand':
@@ -408,6 +406,24 @@ module.exports = class MachineService extends MessagingService {
 				logger.debug('PersistenceService: update named cells');
 				await updateNamedCells(RepositoryManager.machineRepository, response);
 				break;
+			// SERVER_COMMANDS:
+			case 'command.server.DeleteCellsCommand':
+			case 'command.server.PasteCellsCommand':
+			case 'command.server.SetCellsCommand':
+			case 'command.server.SetCellLevelsCommand':
+			case 'command.server.SetCellsPropertiesCommand': {
+				logger.info(`PersistenceService: persist on server command ${response.command}`);
+				// const { machineId, srcId, sheet } = event;
+				// const { cells, graphCells, namedCells, properties } = sheet;
+				// const _cells = cells.length && cells[0].ref ? cells.reduce(byRef, {}) : toMapObject(cells, 'reference');
+				// await RepositoryManager.machineRepository.updateSheet(
+				// 	machineId,
+				// 	srcId,
+				// 	// { cells: toMapObject(cells, 'reference'), properties, graphCells, namedCells }
+				// 	{ cells: _cells, properties, graphCells, namedCells }
+				// );
+				break;
+			}
 			default:
 				break;
 		}

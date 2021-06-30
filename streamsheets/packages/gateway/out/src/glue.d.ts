@@ -36,7 +36,9 @@ export declare const RawAPI: {
         findMachines: ({ machineRepo, auth }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope) => Promise<import("./machine").Machine[]>;
         findMachinesByName: ({ machineRepo, auth }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, name: string) => Promise<import("./machine").Machine[]>;
         saveOrUpdate: ({ machineRepo, repositories }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, machine: import("./machine").Machine, graph?: import("./machine").Graph | undefined) => Promise<void>;
-        delete: ({ api, machineRepo, repositories }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, id: string) => Promise<[any, any] | undefined>;
+        delete: ({ machineServiceProxy, api }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, machineId: string) => Promise<{
+            deleted: any;
+        }>;
         unload: ({ machineServiceProxy, api }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, machineId: string) => Promise<{
             unloaded: boolean;
             state?: undefined;

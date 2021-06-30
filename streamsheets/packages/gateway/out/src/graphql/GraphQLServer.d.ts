@@ -111,6 +111,10 @@ export const resolvers: {
             machineRepo: any;
             auth: any;
         }) => Promise<any>;
+        deleteMachineFiles: (obj: any, args: any, { machineRepo, auth }: {
+            machineRepo: any;
+            auth: any;
+        }) => Promise<any>;
     };
     ScopedMutation: {
         import: ({ scope }: {
@@ -126,6 +130,13 @@ export const resolvers: {
         }, { machineId, newName }: {
             machineId: any;
             newName: any;
+        }, { api }: {
+            api: any;
+        }) => Promise<any>;
+        deleteMachine: ({ scope }: {
+            scope: any;
+        }, { machineId }: {
+            machineId: any;
         }, { api }: {
             api: any;
         }) => Promise<any>;
@@ -158,7 +169,11 @@ export const resolvers: {
     };
     Machine: {
         file: (obj: any, args: any) => Promise<string | null>;
-        files: (obj: any) => Promise<string[]>;
+        files: (obj: any) => Promise<{
+            name: string;
+            lastModified: string;
+            path: string;
+        }[]>;
         referencedStreams: (obj: any) => Promise<any>;
         canEdit: () => Promise<boolean>;
     };

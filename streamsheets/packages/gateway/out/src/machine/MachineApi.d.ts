@@ -16,7 +16,9 @@ export declare const BaseMachineApi: {
     findMachines: ({ machineRepo, auth }: RequestContext, scope: Scope) => Promise<Machine[]>;
     findMachinesByName: ({ machineRepo, auth }: RequestContext, scope: Scope, name: string) => Promise<Machine[]>;
     saveOrUpdate: ({ machineRepo, repositories }: RequestContext, scope: Scope, machine: Machine, graph?: Graph | undefined) => Promise<void>;
-    delete: ({ api, machineRepo, repositories }: RequestContext, scope: Scope, id: string) => Promise<[any, any] | undefined>;
+    delete: ({ machineServiceProxy, api }: RequestContext, scope: Scope, machineId: string) => Promise<{
+        deleted: any;
+    }>;
     unload: ({ machineServiceProxy, api }: RequestContext, scope: Scope, machineId: string) => Promise<{
         unloaded: boolean;
         state?: undefined;

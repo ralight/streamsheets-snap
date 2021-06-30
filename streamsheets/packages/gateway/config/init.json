@@ -1026,7 +1026,7 @@
 											}
 										},
 										"text": {
-											"v": "~3Cp~3EThis%20is%20an%20example%20setup%20to%20make%20you~26nbsp%3Bcomfortable%20with%20Streamsheets.~26nbsp%3BThere%20are%202%20apps%20that%20play%20together.~26nbsp%3BThis%20app%20receives%20the%20data%20and%20adds%20calculation%20logic%20and%20visualization.%20The%20data%20source%20is%20the%20~22Wind%20Turbine~22%20app.~3Cbr~3E~26nbsp%3BIn%20this%20example%2C%20both%20apps%20communicate~26nbsp%3Bvia%20MQTT%20through%20a%20Mosquitto%20broker%20running%20on%20the%20local%20computer.%20If%20you%20do%20not%20have%20a%20broker%20running%20already%2C%20you%20can%20install%20one%20with%20~22snap%20install%20mosquitto~22.~3C%2Fp~3E",
+											"v": "~3Cp~3EThis%20is%20an%20example%20setup%20to%20make%20you~26nbsp%3Bcomfortable%20with%20Streamsheets.~26nbsp%3BThere%20are%202%20apps%20that%20play%20together.~26nbsp%3BThis%20app%20receives%20the%20data%20and%20adds%20calculation%20logic%20and%20visualization.%20The%20data%20source%20is%20the%20~22Wind%20Turbine~22%20app.~3Cbr~3E~26nbsp%3BIn%20this%20example%2C%20both%20apps%20communicate~26nbsp%3Bvia%20MQTT%20through%20the%20integrated%20Mosquitto%20MQTT%20Broker.~3C%2Fp~3E",
 											"t": "s"
 										}
 									},
@@ -4716,7 +4716,7 @@
 									"level": 0
 								},
 								"256146114124": {
-									"formula": "DRAW.LABEL(\"256146114124\",\"Bezier1\",\"Label1\",5027,3528,8742,6332,\"None\",,,,,,\"&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through a Mosquitto broker running on the local computer. If you do not have a broker running, you can install one using 'snap install mosquitto'&lt;/p&gt;\",FONTFORMAT(\"Arial\",12,,\"#434343\"))",
+									"formula": "DRAW.LABEL(\"256146114124\",\"Bezier1\",\"Label1\",5027,3528,8742,6332,\"None\",,,,,,\"&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through the integrated Mosquitto MQTT Broker&lt;/p&gt;\",FONTFORMAT(\"Arial\",12,,\"#434343\"))",
 									"value": true,
 									"type": "undefined",
 									"info": {
@@ -4943,10 +4943,10 @@
 									"events": "",
 									"angle": 0,
 									"rotcenter": 4,
-									"label": "\"&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through a Mosquitto broker running on the local computer. If you do not have a broker running already, you can install one with 'snap install mosquitto'.&lt;/p&gt;\"",
-									"text": "&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through a Mosquitto broker running on the local computer. If you do not have a broker running already, you can install one with 'snap install mosquitto'.&lt;/p&gt;",
+									"label": "\"&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through the integrated Mosquitto MQTT Broker&lt;/p&gt;\"",
+									"text": "&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through the integrated Mosquitto MQTT Broker&lt;/p&gt;",
 									"font": "{\"fontname\":\"Arial\",\"fontsize\":12,\"fontcolor\":\"#434343\"}",
-									"formula": "DRAW.LABEL(\"256146114124\",\"Bezier1\",\"Label1\",5027,3528,8742,6332,\"None\",,,,,,\"&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through a Mosquitto broker running on the local computer. If you do not have a broker running already, you can install one with 'snap install mosquitto'.&lt;/p&gt;\",FONTFORMAT(\"Arial\",12,,\"#434343\"))"
+									"formula": "DRAW.LABEL(\"256146114124\",\"Bezier1\",\"Label1\",5027,3528,8742,6332,\"None\",,,,,,\"&lt;p&gt;This is an example setup to make you&amp;nbsp;comfortable with Streamsheets.&amp;nbsp;There are 2 apps that play together.&amp;nbsp;This App simulates a Wind Turbine and&amp;nbsp;serves as a data source.&amp;nbsp;It creates and sends&amp;nbsp;data continuously.You can see its cycle time when&amp;nbsp;clicking on the Cycle and Interval Icon in the top bar.&amp;nbsp;The Windcockpit app receives the data and adds calculation logic and visualization. In this example, both apps communicate&amp;nbsp;via MQTT through the integrated Mosquitto MQTT Broker&lt;/p&gt;\",FONTFORMAT(\"Arial\",12,,\"#434343\"))"
 								},
 								"695592121162": {
 									"source": "name",
@@ -5946,7 +5946,7 @@
 											"v": "10054"
 										},
 										"height": {
-											"v": "7656"
+											"v": "7056"
 										},
 										"name": "Bezier2",
 										"reshape": [
@@ -6011,7 +6011,7 @@
 													},
 													"y": {
 														"f": "HEIGHT",
-														"v": "7656"
+														"v": "7056"
 													}
 												},
 												{
@@ -6021,7 +6021,7 @@
 													},
 													"y": {
 														"f": "HEIGHT",
-														"v": "7656"
+														"v": "7056"
 													}
 												},
 												{
@@ -6093,7 +6093,7 @@
 													},
 													"y": {
 														"f": "HEIGHT",
-														"v": "7656"
+														"v": "7056"
 													}
 												},
 												{
@@ -6103,7 +6103,7 @@
 													},
 													"y": {
 														"f": "HEIGHT",
-														"v": "7656"
+														"v": "7056"
 													}
 												},
 												{
@@ -6171,7 +6171,7 @@
 													},
 													"y": {
 														"f": "HEIGHT",
-														"v": "7656"
+														"v": "7056"
 													}
 												},
 												{
@@ -6181,7 +6181,7 @@
 													},
 													"y": {
 														"f": "HEIGHT",
-														"v": "7656"
+														"v": "7056"
 													}
 												},
 												{
@@ -6270,7 +6270,7 @@
 											}
 										},
 										"text": {
-											"v": "~3Cp~3EThis%20is%20an%20example%20setup%20to%20make%20you~26nbsp%3Bcomfortable%20with%20Streamsheets.~26nbsp%3BThere%20are%202%20apps%20that%20play%20together.~26nbsp%3BThis%20App%20simulates%20a%20Wind%20Turbine%20and~26nbsp%3Bserves%20as%20a%20data%20source.~26nbsp%3BIt%20creates%20and%20sends~26nbsp%3Bdata%20continuously.%20You%20can%20see%20its%20cycle%20time%20when~26nbsp%3Bclicking%20on%20the%20~22Cycle%20and%20Interval~22%20Icon%20in%20the%20top%20bar.~26nbsp%3BThe%20~22Dashboard~22%20app%20receives%20the%20data%20and%20adds%20calculation%20logic%20and%20visualization.%20In%20this%20example%2C%20both%20apps%20communicate~26nbsp%3Bvia%20MQTT%20through%20a%20Mosquitto%20broker%20running%20on%20the%20local%20computer.%20If%20you%20do%20not%20have%20a%20broker%20running%20already%2C%20you%20can%20install%20one%20with%20~22snap%20install%20mosquitto~22.~3C%2Fp~3E",
+											"v": "~3Cp~3EThis%20is%20an%20example%20setup%20to%20make%20you~26nbsp%3Bcomfortable%20with%20Streamsheets.~26nbsp%3BThere%20are%202%20apps%20that%20play%20together.~26nbsp%3BThis%20App%20simulates%20a%20Wind%20Turbine%20and~26nbsp%3Bserves%20as%20a%20data%20source.~26nbsp%3BIt%20creates%20and%20sends~26nbsp%3Bdata%20continuously.%20You%20can%20see%20its%20cycle%20time%20when~26nbsp%3Bclicking%20on%20the%20~22Cycle%20and%20Interval~22%20Icon%20in%20the%20top%20bar.~26nbsp%3BThe%20~22Dashboard~22%20app%20receives%20the%20data%20and%20adds%20calculation%20logic%20and%20visualization.%20In%20this%20example%2C%20both%20apps%20communicate~26nbsp%3Bvia%20MQTT%20through%20the%20integrated%20Mosquitto%20MQTT%20Broker~3C%2Fp~3E",
 											"t": "s"
 										}
 									},

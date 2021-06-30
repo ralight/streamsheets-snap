@@ -54,6 +54,12 @@ const typeDefs = gql `
 		stream: Stream
 	}
 
+	type File {
+		name: String!
+		lastModified: String!
+		path: String!
+	}
+
 	type Machine {
 		id: ID!
 		name: String!
@@ -64,7 +70,7 @@ const typeDefs = gql `
 		streamsheets: [StreamSheet!]!
 		referencedStreams: [ID!]!
 		canEdit: Boolean
-		files: [String!]!
+		files: [File!]!
 		file(name: String!): String
 		scope: Scope!
 	}
@@ -234,6 +240,12 @@ const typeDefs = gql `
 		clonedMachine: Machine
 	}
 
+	type DeleteMachineResult implements MutationResponse {
+		success: Boolean!
+		code: String!
+		message: String!
+	}
+
 	type RenameMachineFilePayload implements MutationResponse {
 		success: Boolean!
 		code: String!
@@ -247,6 +259,12 @@ const typeDefs = gql `
 		code: String!
 		message: String!
 		name: String
+	}
+
+	type DeleteMachineFilesPayload implements MutationResponse {
+		success: Boolean!
+		code: String!
+		message: String!
 	}
 
 	input MachineQuery {
@@ -267,6 +285,7 @@ const typeDefs = gql `
 	type ScopedMutation {
 		import(input: ImportInput!, file: Upload!): ImportResult!
 		cloneMachine(machineId: ID!, newName: String): CloneResult!
+		deleteMachine(machineId: ID!): DeleteMachineResult!
 	}
 
 	type Query {
@@ -287,6 +306,7 @@ const typeDefs = gql `
 		scopedByMachine(machineId: ID!): ScopedMutation!
 		renameMachineFile(machineId: ID!, oldName: String!, newName: String!): RenameMachineFilePayload!
 		deleteMachineFile(machineId: ID!, name: String!): DeleteMachineFilePayload!
+		deleteMachineFiles(machineId: ID!, files: [String!]!): DeleteMachineFilesPayload!
 	}
 `;
 class GraphQLServer {

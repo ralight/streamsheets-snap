@@ -19,6 +19,7 @@ const APIRouter = require('./APIRouter');
 const APIRouterRepositoryServer = require('./APIRouterRepositoryServer');
 const Error = require('./error/Error');
 const Auth = require('../Auth').default;
+const MACHINE_DATA_DIR = process.env.MACHINE_DATA_DIR || './machinedata';
 module.exports = class DefaultApp {
     constructor(pkg, config, globalContext) {
         const debug = util.debuglog(pkg.name);
@@ -78,7 +79,7 @@ module.exports = class DefaultApp {
         app.use('/api/v1.0/meta', router);
         app.use('/api/v1.0/config', router);
         Object.values(this.globalContext.middleware).forEach((mw) => app.use(...mw));
-        app.use('/api/v1.0/graphql', (req, res, next) => {
+        const authenticate = (req, res, next) => {
             passport.authenticate('jwt', { session: false }, async (err, user) => {
                 if (user) {
                     try {
@@ -97,9 +98,27 @@ module.exports = class DefaultApp {
                     res.status(403).json({ error: 'Not authenticated' });
                 }
             })(req, res, next);
-        });
+        };
+        app.use('/api/v1.0/graphql', authenticate);
         const getSession = (req) => ({ user: req.user });
         GraphQLServer.init(app, '/api/v1.0/graphql', (req) => this.globalContext.getRequestContext(this.globalContext, getSession(req)), this.globalContext.graphql);
+        app.get('/api/v1.0/machines/:machineId/files/:fileName', authenticate, async (req, res) => {
+            try {
+                const requestContext = await app.locals.globalContext.getRequestContext(app.locals.globalContext, getSession(req));
+                const { scope } = await requestContext.machineRepo.findMachine(req.params.machineId);
+                if (!requestContext.auth.isValidScope(scope)) {
+                    res.status(403).json({ error: 'Not allowed' });
+                }
+                const machineFile = path.join(MACHINE_DATA_DIR, req.params.machineId, path.basename(req.params.fileName));
+                const absoluteMachineFile = path.isAbsolute(machineFile)
+                    ? machineFile
+                    : path.join(process.cwd(), machineFile);
+                res.sendFile(absoluteMachineFile);
+            }
+            catch (e) {
+                logger.error(`Failed to resolve Machine#${req.params.machineId} file  ${req.params.fileName}`, e);
+            }
+        });
         const routerRepository = new APIRouterRepositoryServer();
         app.use('/api/v1.0', routerRepository);
         app.use(bodyParser.urlencoded({

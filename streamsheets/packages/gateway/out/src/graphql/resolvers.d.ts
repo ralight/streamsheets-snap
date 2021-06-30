@@ -109,6 +109,10 @@ export namespace resolvers {
             machineRepo: any;
             auth: any;
         }): Promise<any>;
+        export function deleteMachineFiles(obj: any, args: any, { machineRepo, auth }: {
+            machineRepo: any;
+            auth: any;
+        }): Promise<any>;
     }
     export const ScopedMutation: {
         import: ({ scope }: {
@@ -124,6 +128,13 @@ export namespace resolvers {
         }, { machineId, newName }: {
             machineId: any;
             newName: any;
+        }, { api }: {
+            api: any;
+        }) => Promise<any>;
+        deleteMachine: ({ scope }: {
+            scope: any;
+        }, { machineId }: {
+            machineId: any;
         }, { api }: {
             api: any;
         }) => Promise<any>;
@@ -156,7 +167,11 @@ export namespace resolvers {
     }
     export namespace Machine {
         export function file(obj: any, args: any): Promise<string | null>;
-        export function files(obj: any): Promise<string[]>;
+        export function files(obj: any): Promise<{
+            name: string;
+            lastModified: string;
+            path: string;
+        }[]>;
         export function referencedStreams(obj: any): Promise<any>;
         export function canEdit(): Promise<boolean>;
     }

@@ -44,11 +44,9 @@ exports.BaseMachineApi = {
             await repositories.graphRepository.saveOrUpdateGraph(graph.id, graph);
         }
     },
-    delete: async ({ api, machineRepo, repositories }, scope, id) => {
-        const machine = await api.machine.findMachine(scope, id);
-        if (machine) {
-            return Promise.all([machineRepo.deleteMachine(id), repositories.graphRepository.deleteGraphByMachineId(id)]);
-        }
+    delete: async ({ machineServiceProxy, api }, scope, machineId) => {
+        const result = await machineServiceProxy.delete(machineId);
+        return result;
     },
     unload: async ({ machineServiceProxy, api }, scope, machineId) => {
         const machine = await api.machine.findMachine(scope, machineId);

@@ -27,10 +27,11 @@ const timeoutHandler = (requestId, requests) => {
     }
 };
 class ServerConnection {
-    constructor(type, serviceType) {
+    constructor(type, serviceType, context = {}) {
         this.id = id_generator_1.default.generate();
         this.type = type;
         this.serviceType = serviceType;
+        this.context = context;
         this.timeout = 500000;
         this._evHandler = null;
         this._pendingRequests = new Map();
@@ -86,7 +87,9 @@ class ServerConnection {
                 if (this._redisConnection) {
                     this._redisConnection.unsubscribe(message.machineId);
                 }
-                this.messagingClient.unsubscribe(`${protocols_1.Topics.SERVICES_MACHINES_EVENTS}/${message.machineId}`);
+                if (this.context.machineRouter)
+                    this.context.machineRouter.handleMachineServiceInputMessage(message);
+                this.messagingClient.unsubscribe(`${protocols_1.Topics.SERVICES_MACHINES_EVENTS}/${message.machineId}/#`);
                 break;
             case 'graph_unsubscribe':
                 this.messagingClient.unsubscribe(`${protocols_1.Topics.SERVICES_GRAPHS_EVENTS}/${message.machineId}`);
@@ -101,7 +104,7 @@ class ServerConnection {
             case 'machine_subscribe':
             case 'machine_load_subscribe':
                 (_a = this._redisConnection) === null || _a === void 0 ? void 0 : _a.subscribe(message.response.machine.id, this.stepEventHandler);
-                this.messagingClient.subscribe(`${protocols_1.Topics.SERVICES_MACHINES_EVENTS}/${message.response.machine.id}`);
+                this.messagingClient.subscribe(`${protocols_1.Topics.SERVICES_MACHINES_EVENTS}/${message.response.machine.id}/#`);
                 break;
             case 'graph_load_subscribe':
             case 'graph_subscribe':

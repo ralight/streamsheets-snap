@@ -29,6 +29,15 @@ class MachineServiceProxy {
         const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
         return { unloaded: result.machine.unloaded };
     }
+    async delete(id) {
+        const message = {
+            type: 'machine_delete',
+            requestId: Math.random(),
+            machineId: id
+        };
+        const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
+        return { deleted: result.machine.deleted };
+    }
     async start(id) {
         const message = {
             type: 'machine_start',
@@ -43,6 +52,29 @@ class MachineServiceProxy {
             type: 'machine_pause',
             requestId: Math.random(),
             machineId: id
+        };
+        const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
+        return result;
+    }
+    async addInboxMessage(id, streamsheetId, inboxMessage, metadata) {
+        const message = {
+            type: 'add_inbox_message',
+            requestId: Math.random(),
+            machineId: id,
+            streamsheetId,
+            message: inboxMessage,
+            metadata
+        };
+        const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
+        return result;
+    }
+    async updateExtensionSettings(id, extensionId, settings) {
+        const message = {
+            type: 'machine_update_extension_settings',
+            requestId: Math.random(),
+            machineId: id,
+            extensionId,
+            settings
         };
         const result = await this.requestHelper.doRequestMessage({ message, topic: SERVICES_MACHINES_INPUT });
         return result;
