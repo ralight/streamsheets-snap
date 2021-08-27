@@ -1,5 +1,5 @@
 name: streamsheets
-version: '2.4'
+version: '2.4.1'
 summary: A no-code platform for processing streaming data in a spreadsheet interface
 description: |
   Streamsheets are spreadsheets that can process real time streaming data from
