@@ -127,7 +127,7 @@ parts:
 
   nginx:
     plugin: autotools
-    source: https://nginx.org/download/nginx-1.17.8.tar.gz
+    source: https://nginx.org/download/nginx-1.21.1.tar.gz
     build-packages:
       - libpcre3-dev
       - libssl-dev
