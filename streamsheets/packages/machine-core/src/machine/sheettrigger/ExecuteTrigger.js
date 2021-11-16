@@ -13,7 +13,7 @@ const MessageLoopCycle = require('./MessageLoopCycle');
 const { ManualMessageLoopCycle } = require('./MessageLoopCycle');
 const { TimerRepeatUntilCycle } = require('./RepeatUntilCycle');
 const RepeatedMessageLoopCycle = require('./RepeatedMessageLoopCycle');
-const { ManualCycle, TimerCycle } = require('./cycles');
+const { ManualCycle, TimerCycle, MIN_CYCLETIME } = require('./cycles');
 
 const noop = () => {};
 
@@ -135,9 +135,15 @@ class ExecuteTrigger extends BaseTrigger {
 		if (manual && this.resumeFn) super.step(manual);
 	}
 
+	dispose() {
+		// ensure execute is cancelled on dispose
+		this.cancelExecute();
+		super.dispose();
+	}
+
 	execute(repetitions, message, speed, resumeFn) {
-		// DL-4592: default to machine cycle or use 20in ms
-		this.speed = speed || this.machine.cycletime;
+		// DL-4592: default to machine cycle or use 20 in ms
+		this.speed = Math.max(MIN_CYCLETIME, speed || this.machine.cycletime);
 		this.message = message;
 		this.repetitions = repetitions;
 		this.resumeFn = resumeFn || noop;
@@ -147,10 +153,13 @@ class ExecuteTrigger extends BaseTrigger {
 		this.activeCycle.run();
 	}
 	cancelExecute() {
-		this.retval = undefined;
-		this.resumeFn = undefined;
-		this.stopProcessing();
-		this.activeCycle = this.isMachineStopped ? this.getManualCycle() : this.getTimerCycle();
+		// might be called after dispose by a different sheet!
+		if (this.streamsheet) {
+			this.retval = undefined;
+			this.resumeFn = undefined;
+			this.stopProcessing();
+			this.activeCycle = this.isMachineStopped ? this.getManualCycle() : this.getTimerCycle();
+		}
 	}
 	resumeExecute() {
 		if (this.resumeFn) {

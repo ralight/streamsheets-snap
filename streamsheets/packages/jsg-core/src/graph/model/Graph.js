@@ -351,11 +351,6 @@ class Graph extends GraphItem {
 		if (id !== undefined) {
 			this._uniqueId = Number(id);
 		}
-		// read old settings attributes?
-		// var grid = reader.getAttribute(object, "grid");
-		// if (grid !== undefined) {
-		//     this._settings.read(reader, object);
-		// }
 
 		this._restoreConnections(this);
 		this.invalidateTerms();
@@ -553,7 +548,7 @@ class Graph extends GraphItem {
 
 	// overwritten to simply return corresponding template because a graph has no TextFormat...
 	getTextFormat() {
-		const template = JSG.tmplStore.getTemplate(TextFormatAttributes.Template_ID);
+		const template = JSG.tmplStore.getTemplate(TextFormatAttributes.TemplateID);
 		return template || super.getTextFormat();
 	}
 

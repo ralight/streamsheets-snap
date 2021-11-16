@@ -1,7 +1,0 @@
-{
-	"url": "/cedalo/examples",
-	"method": "GET",
-	"headers": {
-		"Accept": "application/json"
-	}
-}

@@ -4,7 +4,7 @@ const errors_1 = require("../errors");
 const INTERNAL_ERROR_PAYLOAD = {
     success: false,
     code: 'INTERNAL_ERROR',
-    message: 'An internal server error occured'
+    message: 'An internal server error occurred'
 };
 exports.Payload = {
     createFailure: (error) => {

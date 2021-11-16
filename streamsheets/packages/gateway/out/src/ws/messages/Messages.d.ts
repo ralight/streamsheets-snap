@@ -12,24 +12,27 @@ export class CreateGraphMessage extends CreateGraphMessage_base {
 declare const CreateStreamSheetMessage_base: any;
 export class CreateStreamSheetMessage extends CreateStreamSheetMessage_base {
     [x: string]: any;
-    constructor({ machineId, streamsheetId, streamsheetName, activeItemId, position }: {
+    constructor({ machineId, streamsheetId, streamsheetName, activeItemId, position, sheetType }: {
         machineId: any;
         streamsheetId: any;
         streamsheetName: any;
         activeItemId: any;
         position: any;
+        sheetType: any;
     });
     _machineId: any;
     _streamsheetId: any;
     _streamsheetName: any;
     _activeItemId: any;
     _position: any;
+    _sheetType: any;
     _getConfig(): {
         machineId: any;
         streamsheetId: any;
         streamsheetName: any;
         activeItemId: any;
         position: any;
+        sheetType: any;
     };
 }
 declare const DeleteGraphMessage_base: any;

@@ -30,8 +30,14 @@ export declare const ImportApi: {
             proposedName: string;
         }[];
     }>;
-    doImport: ({ repositories, api }: RequestContext, scope: Scope, importData: ExportImportData, machineSelection?: ImportSelection[], streamSelection?: ImportSelection[]) => Promise<{
-        machines: string[];
-        streams: string[];
+    doImport: ({ repositories, api, runFilter }: RequestContext, scope: Scope, importData: ExportImportData, machineSelection?: ImportSelection[], streamSelection?: ImportSelection[]) => Promise<{
+        machines: {
+            id: string;
+            name: string;
+        }[];
+        streams: {
+            id: string;
+            name: string;
+        }[];
     }>;
 };

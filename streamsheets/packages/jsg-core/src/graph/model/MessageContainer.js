@@ -160,7 +160,7 @@ module.exports = class MessageContainer extends Node {
 	}
 
 	_assignItems() {
-		this.getItems().forEach((item) => {
+		this.subItems.forEach((item) => {
 			if (item instanceof CaptionNode) {
 				this._messageCaption = item;
 			} else if (item instanceof SplitterNode) {
@@ -365,6 +365,7 @@ module.exports = class MessageContainer extends Node {
 
 		box.setTop(sizeSheet.y + SplitterNode.DEFAULT_SIZE + heightCaption * 2 + this._topMargin);
 		box.setHeight(size.y - this._topMargin - heightCaption * 2 - SplitterNode.DEFAULT_SIZE - sizeSheet.y);
+
 
 		this._messageEditor.setBoundingBoxTo(box);
 		this._messageEditor.layout();

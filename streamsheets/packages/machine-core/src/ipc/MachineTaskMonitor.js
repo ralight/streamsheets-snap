@@ -9,14 +9,14 @@
  *
  ********************************************************************************/
 const logger = require('../logger').create({ name: 'MachineTaskMonitor' });
+const Redis = require('ioredis');
+const { EventMessage } = require('@cedalo/messages');
+const MachineEvents = require('@cedalo/protocols').MachineServerMessagingProtocol.EVENTS;
+const State = require('../State');
 const MachineTaskOutboxMonitor = require('./MachineTaskOutboxMonitor');
 const MachineTaskStreamSheetMonitor = require('./MachineTaskStreamSheetMonitor');
 const MachineTaskMessagingClient = require('./MachineTaskMessagingClient');
 const { collectMachineStats } = require('./utils');
-const State = require('../State');
-const MachineEvents = require('@cedalo/protocols').MachineServerMessagingProtocol.EVENTS;
-const { EventMessage } = require('@cedalo/messages');
-const Redis = require('ioredis');
 
 const REDIS_PORT = parseInt(process.env.REDIS_PORT, 10) || 6379;
 const REDIS_HOST = process.env.REDIS_HOST || 'internal-redis';
@@ -130,6 +130,11 @@ class MachineTaskMonitor {
 			case 'cycletime':
 				event = updateEvent(MachineEvents.MACHINE_CYCLETIME_EVENT, machine, { cycletime: machine.cycletime });
 				break;
+			case 'cycleregulated':
+				event = updateEvent(MachineEvents.MACHINE_CYCLEREGULATED_EVENT, machine, {
+					isCycleRegulated: machine.settings.isCycleRegulated
+				});
+				break;
 			case 'stream_reloaded':
 				event = updateEvent(MachineEvents.STREAMS_RELOAD_EVENT, machine, { data });
 				break;
@@ -138,7 +143,8 @@ class MachineTaskMonitor {
 				break;
 			case 'lastModified':
 				event = updateEvent(MachineEvents.MACHINE_LAST_MODIFIED_EVENT, machine, {
-					lastModified: machine.metadata.lastModified, lastModifiedBy: machine.metadata.lastModifiedBy
+					lastModified: machine.metadata.lastModified,
+					lastModifiedBy: machine.metadata.lastModifiedBy
 				});
 				break;
 			case 'locale':
@@ -192,7 +198,10 @@ class MachineTaskMonitor {
 				break;
 			case 'extensions': {
 				const [extensionId, extensionSettings] = data;
-				event = updateEvent(MachineEvents.MACHINE_EXTENSION_SETTINGS_EVENT, machine, { extensionId, settings: extensionSettings });
+				event = updateEvent(MachineEvents.MACHINE_EXTENSION_SETTINGS_EVENT, machine, {
+					extensionId,
+					settings: extensionSettings
+				});
 				break;
 			}
 			default:

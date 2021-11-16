@@ -8,6 +8,8 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  ********************************************************************************/
+const { MetricsManager } = require('@cedalo/metrics');
+// const os = require('os');
 const Channel = require('./Channel');
 const Machine = require('../machine/Machine');
 const MachineTaskMonitor = require('./MachineTaskMonitor');
@@ -29,11 +31,18 @@ const createMachine = () => {
 	machine.metadata.lastModifiedBy = machine.owner;
 	return machine;
 };
-const channel = Channel.create(process);
+const channel = Channel.create(process, { logger });
 const machine = createMachine();
 const monitor = new MachineTaskMonitor(machine, channel);
 const requestHandler = new MachineTaskRequestHandler(monitor, channel);
 MachineTaskMessagingClient.register(machine);
+
+if (process.env.STREAMSHEETS_METRICS_ENABLED) {
+	setInterval(async () => {
+		const metrics = await MetricsManager.getMetrics();
+		MachineTaskMessagingClient.publishMetrics(metrics);
+	}, process.env.STREAMSHEETS_METRICS_INTERVAL || 1000);
+}
 
 const shutdown = async (deleted) => {
 	try {
@@ -45,7 +54,7 @@ const shutdown = async (deleted) => {
 	} catch (err) {
 		logger.error('Error while shutting down machine!', err);
 	} finally {
-		channel.exit();
+		channel.exit(1);
 	}
 };
 
@@ -66,3 +75,10 @@ process.on('message', (msg) => {
 		handleCommand(msg);
 	}
 });
+// PROCESS PRIORITY:
+// try {
+// 	logger.info('change process priority to -20');
+// 	os.setPriority(-20);
+// } catch (err) {
+// 	logger.error('failed to change process priority', err);
+// }

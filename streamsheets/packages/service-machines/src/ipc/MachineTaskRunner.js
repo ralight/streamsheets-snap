@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2020 Cedalo AG
  *
- * This program and the accompanying materials are made available under the 
+ * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
  *
@@ -9,12 +9,8 @@
  *
  ********************************************************************************/
 const fork = require('child_process').fork;
-const {
-	Channel,
-	ChannelRequestHandler,
-	MachineTaskFile,
-	State
-} = require('@cedalo/machine-core');
+const zlib = require('zlib');
+const { Channel, ChannelRequestHandler, MachineTaskFile, State } = require('@cedalo/machine-core');
 const StreamManager = require('../managers/StreamManager');
 const MachineTaskStreams = require('./MachineTaskStreams');
 const MachineTaskObserver = require('./MachineTaskObserver');
@@ -42,17 +38,22 @@ const forkOptions = (options) => ({
 });
 
 class MachineTaskRunner {
-	constructor(options = {}) {
-		const task = fork(
-			MachineTaskFile,
-			forkArgs(options.machineArgs),
-			forkOptions(options.execArgs)
-		);
+	static with(options = {}) {
+		const task = fork(MachineTaskFile, forkArgs(options.machineArgs), forkOptions(options.execArgs));
+		try {
+			return new MachineTaskRunner(task, options);
+		} catch (err) {
+			task.kill(9);
+			logger.error('Failed to create new MachineTaskRunner!', err);
+		}
+		return undefined;
+	}
+	constructor(task, options) {
 		this._id = undefined;
 		this.name = undefined;
 		this.isOPCUA = false;
 		this.state = State.STOPPED;
-		this.channel = Channel.create(task);
+		this.channel = Channel.create(task, { logger });
 		this.options = Object.assign({}, options);
 		this.streams = new MachineTaskStreams(this.channel);
 		this.taskObserver = new MachineTaskObserver(this);
@@ -70,8 +71,12 @@ class MachineTaskRunner {
 		this.streams.dispose();
 		this.taskObserver.dispose();
 		this.requestHandler.dispose();
+		// deleted signals to remove outbox storage too
 		this.channel.send({ cmd: 'shutdown', deleted });
-		if (this.onDispose) this.onDispose();
+		if (this.onDispose) {
+			this.onDispose();
+			this.onDispose = undefined;
+		}
 	}
 
 	async request(type, usrId, props = {}) {
@@ -86,7 +91,12 @@ class MachineTaskRunner {
 	}
 
 	async getDefinition() {
-		return this.requestHandler.request({ request: 'definition' });
+		// return this.requestHandler.request({ request: 'definition' });
+		const zipped = await this.requestHandler.request({ request: 'definition' });
+		const zippedBuffer = Buffer.from(zipped.data);
+		return new Promise((resolve, reject) => {
+			zlib.unzip(zippedBuffer, (err, buf) => (err ? reject(err) : resolve(JSON.parse(buf.toString('utf8')))));
+		});
 	}
 
 	async start() {
@@ -105,6 +115,10 @@ class MachineTaskRunner {
 		return this.requestHandler.request({ request: 'unsubscribe', clientId });
 	}
 
+	async healthCheck() {
+		return this.requestHandler.request({ request: 'healthcheck' });
+	}
+
 	async load(machineDefinition, functionDefinitions) {
 		const result = await this.requestHandler.request({
 			request: 'load',
@@ -120,20 +134,43 @@ class MachineTaskRunner {
 	}
 
 	async loadFunctions(functionDefinitions) {
-		this.requestHandler.request({
+		return this.requestHandler.request({
 			request: 'loadFunctions',
 			functionDefinitions
 		});
 	}
+
+	async shutdown(deleted = false) {
+		await this.stop();
+		await this.dispose(deleted);
+	}
 }
 
+const createRunner = (options) => {
+	try {
+		return MachineTaskRunner.with(options);
+	} catch (err) {
+		logger.error('Failed to create new MachineTaskRunner!', err);
+	}
+	return undefined;
+};
+const loadFunctions = async (runner) => {
+	try {
+		const modules = FunctionModulesResolver.getModules();
+		await runner.request('registerFunctionModules', undefined, { modules });
+		await runner.request('registerStreams', undefined, { descriptors: StreamManager.getDescriptors() });
+		return runner;
+	} catch (err) {
+		logger.error('Failed to load functions for new machine! Shutdown machine...', err);
+		await runner.shutdown();
+	}
+	return undefined;
+};
 // returns creates a new machine runner for specified machine definition
 const create = async (runneropts) => {
 	logger.info('create new MachineTaskRunner...');
-	const runner = new MachineTaskRunner(runneropts);
-	await runner.request('registerFunctionModules', undefined, {modules: FunctionModulesResolver.getModules() });
-	await runner.request('registerStreams', undefined, { descriptors: StreamManager.getDescriptors() });
-	return runner;
+	const runner = createRunner(runneropts);
+	return runner ? loadFunctions(runner) : runner;
 };
 
 module.exports = {

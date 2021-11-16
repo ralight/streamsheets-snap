@@ -35,6 +35,7 @@ FILES="
 	create-rule.md
 	http_signing.md
 	snapshot.md
+	.npmignore
 	"
 
 for a in $FILES; do
@@ -47,6 +48,7 @@ DIRS="
 	docs
 	readme
 	.github
+	test
 	"
 
 for a in $DIRS; do
@@ -56,3 +58,5 @@ done
 
 rm -rf streamsheets/npm-packages-offline-cache
 rm -f streamsheets/node_modules/napi-build-utils/index.md
+find -type f -name '*.js' -exec fromdos {} \;
+find -type f -name '*.ts' -exec fromdos {} \;

@@ -14,7 +14,6 @@ const http_1 = __importDefault(require("http"));
 const config = __importStar(require("../config"));
 const DefaultApp_1 = __importDefault(require("./DefaultApp"));
 const pkg = require('../../../package.json');
-process.title = pkg.name;
 config.basedir = __dirname;
 http_1.default.globalAgent.maxSockets = 16384;
 async function start(globalContext) {

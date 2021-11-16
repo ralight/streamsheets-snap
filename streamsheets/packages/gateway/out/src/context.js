@@ -55,6 +55,16 @@ const applyPlugins = async (context, pluginModules) => {
         return currentConfig;
     }, Promise.resolve(context));
 };
+const prepareFilters = (globalContext) => {
+    const filters = Object.values(globalContext.filters).reduce((acc, filters) => [...acc, ...filters], []);
+    const filterMap = filters.reduce((acc, [key, func]) => ({ ...acc, [key]: acc[key] ? [...acc[key], func] : [func] }), {});
+    return { ...globalContext, filterMap };
+};
+const prepareHooks = (globalContext) => {
+    const hooks = Object.values(globalContext.hooks).reduce((acc, hooks) => [...acc, ...hooks], []);
+    const hookMap = hooks.reduce((acc, [key, func]) => ({ ...acc, [key]: acc[key] ? [...acc[key], func] : [func] }), {});
+    return { ...globalContext, hookMap };
+};
 exports.init = async (config, plugins) => {
     const mongoClient = await MongoDBConnection.create();
     const graphRepository = new MongoDBGraphRepository(config.mongodb);
@@ -85,7 +95,7 @@ exports.init = async (config, plugins) => {
             admin: true
         });
     }
-    const context = await applyPlugins({
+    const context = prepareHooks(prepareFilters(await applyPlugins({
         mongoClient,
         interceptors: {},
         repositories: RepositoryManager,
@@ -96,8 +106,13 @@ exports.init = async (config, plugins) => {
         rawAuth: authorization_1.baseAuth,
         authStrategies: {},
         middleware: {},
+        filters: {},
+        filterMap: {},
+        hooks: {},
+        hookMap: {},
         rawApi: glue_1.RawAPI,
         machineServiceProxy,
+        runHook: (context, key, ...args) => { var _a; return (_a = context.hookMap[key]) === null || _a === void 0 ? void 0 : _a.forEach((func) => func(context, ...args)); },
         getActor,
         getRequestContext,
         login: async (context, username, password) => {
@@ -120,7 +135,7 @@ exports.init = async (config, plugins) => {
                 throw e;
             }
         }
-    }, plugins);
+    }, plugins)));
     return context;
 };
 //# sourceMappingURL=context.js.map

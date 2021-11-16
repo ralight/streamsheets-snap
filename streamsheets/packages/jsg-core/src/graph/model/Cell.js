@@ -27,6 +27,7 @@ module.exports = class Cell {
 		this._expr = expr;
 		this._value = undefined;
 		this._format = undefined;
+		this._hasErrorValue = false;
 		this._textFormat = undefined;
 		this._attributes = undefined;
 	}
@@ -124,6 +125,7 @@ module.exports = class Cell {
 	setValue(value) {
 		if (value !== '#CALC') {
 			this._value = value;
+			this._hasErrorValue = `${value}`.startsWith('#');
 		}
 	}
 
@@ -131,7 +133,11 @@ module.exports = class Cell {
 		this._info = info;
 	}
 
-	get error() {
+	get hasErrorValue() {
+		return this._hasErrorValue;
+	}
+
+	get errorInfo() {
 		return this._info && this._info.error;
 	}
 
@@ -184,6 +190,14 @@ module.exports = class Cell {
 	clearAll() {
 		this.clearFormat();
 		this.clearContent();
+	}
+
+	getTerm() {
+		return this._expr ? this._expr.getTerm() : undefined;
+	}
+
+	getFormula() {
+		return this._expr && this._expr.hasFormula() ? this._expr.getFormula() : undefined;
 	}
 
 	getExpression() {

@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2020 Cedalo AG
  *
- * This program and the accompanying materials are made available under the 
+ * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
  *
@@ -490,6 +490,11 @@ module.exports = class BaseGatewayClient {
 	loadSubscribeMachine(machineId, settings, scope) {
 		return this.socket.loadSubscribeMachine(machineId, settings, scope);
 	}
+
+	openMachine(machineId) {
+		return this.socket.openMachine(machineId);
+	}
+
 	pauseMachine(machineId) {
 		return this.socket.pauseMachine(machineId);
 	}
@@ -506,8 +511,8 @@ module.exports = class BaseGatewayClient {
 		return this.socket.renameMachine(machineId, newName);
 	}
 
-	createStreamSheet(machineId, activeItemId, position) {
-		return this.socket.createStreamSheet(machineId, activeItemId, position);
+	createStreamSheet(machineId, activeItemId, position, sheetType) {
+		return this.socket.createStreamSheet(machineId, activeItemId, position, sheetType);
 	}
 
 	deleteStreamSheet(machineId, streamsheetId) {

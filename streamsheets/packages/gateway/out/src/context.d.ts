@@ -4,4 +4,4 @@ import { GenericGlobalContext, GlobalContext } from './streamsheets';
 export declare type GatewayPlugin = {
     apply: (context: GenericGlobalContext<RawAPI, BaseAuth>) => Promise<GlobalContext>;
 };
-export declare const init: (config: any, plugins: string[]) => Promise<GenericGlobalContext<RawAPI, BaseAuth>>;
+export declare const init: (config: any, plugins: string[]) => Promise<GlobalContext>;

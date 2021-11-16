@@ -19,6 +19,7 @@ const REQUEST_MAPPINGS = new Map([
                 parameters.streamsheetName = context.message.machineserver.streamsheet.name;
                 parameters.activeItemId = context.message.machineserver.activeItemId;
                 parameters.position = context.message.machineserver.position;
+                parameters.sheetType = context.message.machineserver.sheetType;
                 return parameters;
             },
             target: TARGET_GRAPH_SERVER

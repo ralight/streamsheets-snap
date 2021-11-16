@@ -67,9 +67,15 @@ export declare const RawAPI: {
                 proposedName: string;
             }[];
         }>;
-        doImport: ({ repositories, api }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, importData: import("./export-import/types").ExportImportData, machineSelection?: import("./export-import").ImportSelection[], streamSelection?: import("./export-import").ImportSelection[]) => Promise<{
-            machines: string[];
-            streams: string[];
+        doImport: ({ repositories, api, runFilter }: import("./streamsheets").RequestContext, scope: import("./streamsheets").Scope, importData: import("./export-import/types").ExportImportData, machineSelection?: import("./export-import").ImportSelection[], streamSelection?: import("./export-import").ImportSelection[]) => Promise<{
+            machines: {
+                id: string;
+                name: string;
+            }[];
+            streams: {
+                id: string;
+                name: string;
+            }[];
         }>;
     };
 };

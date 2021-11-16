@@ -466,16 +466,16 @@
         "signature": "8140710374c23822993fdea7fa05d1f61a21b74f2c7d9584eaa69ecd78bdf874"
       },
       "../src/export-import/ImportApi.ts": {
-        "version": "a2117b2440a6a55114459fca978caa7ebbec2f375eb0143a6012b24d73ad4670",
-        "signature": "c6d23916757b9a4c2dd64ff33772ab441678d75d5a40bb18a0c95cfe8b6cbb05"
+        "version": "a7cc80668f00121d5cdf04a9078eec992ec457f95f2749a66160fdba2a3dc621",
+        "signature": "8b57a3b58e50274d34e46fb7d2a2198ed732bbe8d6d292fb42c779fe75ae6bcf"
       },
       "../src/export-import/index.ts": {
         "version": "8cabd8f34b1ef61ef7168f71127d3f771791b51ef83cc80aaa3941476557903f",
         "signature": "218ebc56aa8ae481cc4c1049aee0dc1cfc64a47165d95fd24f80d2a40a2d9c49"
       },
       "../src/glue.ts": {
-        "version": "e72c8f30c3675b8e43ba0c6328f9f42c59fc8ba8ad9e1c9ef30d1403d3ce004d",
-        "signature": "535de23de197c224cd017dcff7cd0a06ae32a1b546cf2d9bf203c7971209bec7"
+        "version": "c937e5132f1ebc9675bb4c18ac72ab316936354e66b035ee4d7f3ef246e21d50",
+        "signature": "6c17f61d293ceea6e3d50c9ec3b71fe02493689b135867b5c6b36e87e89b135a"
       },
       "../../../node_modules/apollo-server-env/dist/fetch.d.ts": {
         "version": "d0c0df73d616f061b0ad9438b6e714b818af58b26c06e076719859dd7648514f",
@@ -1890,11 +1890,11 @@
         "signature": "8b397f5c1e7eaa85bb861dd944ed55216502b47eb8cb4095d792b6c58e2c2f15"
       },
       "../src/ws/messages/Messages.js": {
-        "version": "4583c56fc1b198f478aae8cb3522020c791ae458dfcf1636b0682c4ec8d4228a",
-        "signature": "5cdf49948bbedc86f6971e668127f83dba994676371de54efadd7a9e3ad83dbf"
+        "version": "45aa8de70bac68e87fac26a77a80423f4012741d0e631a9f31eb582c13ff2694",
+        "signature": "6a44658c0bceccdbdf5d815d086444050b6c3acd1972d7b767f36dd4e5afe4e8"
       },
       "../src/ws/interceptors/GraphServerInterceptor.js": {
-        "version": "794cc5e2b1c9b23ec35673774b227da3c90cd35c26cb5adc3ae21fa169730136",
+        "version": "dff89694ce2ee55f4ed1a4c3fef9379fe947c70567c1de050800156f8be254f0",
         "signature": "dcc98e008a4566e216ef495d011bf6f26af8f884168958f8a2fa767d38d7eb62"
       },
       "../src/ws/interceptors/InterceptorChain.js": {
@@ -1902,7 +1902,7 @@
         "signature": "26c14fa3d9f1dcf9cf53af4c759a39e83490174c44610c8f2daf6debc2012364"
       },
       "../src/ws/interceptors/MachineServerInterceptor.js": {
-        "version": "4a580d3cd398fc8a15df8776d96675fa3d3ff941d0742b9f457912b4a88b20ae",
+        "version": "20d522d9dae98a6d256e872a36fdee16de3e691e87f0c6af57d9cfdd1db2b823",
         "signature": "48f99e68fdd8031badeb8eae1a1b434e932cd2975adccfa560d1635771a4befa"
       },
       "../src/ws/SocketServer.ts": {
@@ -1922,11 +1922,11 @@
         "signature": "9dfe431ab1485e17a6055e186c49da9d23af74b965f2e99f8acc6c958778608f"
       },
       "../src/context.ts": {
-        "version": "bf9ccbd541ff0112b23e48e2afc08a45303ab116a347af60fa5ec031fe5d24a1",
-        "signature": "f8c2781dbe12baab539d251f610813faab0b5d28b2904074fc8bb3888c9fa316"
+        "version": "d12591a60d7ffbd5fb5c67592fe15d21f460edec15b37cdfb8dcf57eb7f10491",
+        "signature": "629703c6aa7450c19ed82e4527b432fe8c3588ca2e4bcc44413c90ead96ee6ad"
       },
       "../src/graphql/Payload.ts": {
-        "version": "2f6efe380aa52cbd2922c684fd46d9abb5dac2af8d0348d2d69a847f99af5077",
+        "version": "2a18370a9caa589f0154a436875cedcd4ac1fe58c93b5c1ff2d3296adf8bd261",
         "signature": "0693f29ed3928ab9433e0b994755689011f12de6ad1abf71d45ae00072f49c84"
       },
       "../src/user/Document.ts": {
@@ -1946,8 +1946,8 @@
         "signature": "fe94f70916f8164b2b0664998721cb9ba338c903a49aa3f64e0130e68b249b44"
       },
       "../src/streamsheets.d.ts": {
-        "version": "106c3d13806da7e866c4f3dfd87b3bc5a0411432794c1ea5fb6e89d32aed881c",
-        "signature": "106c3d13806da7e866c4f3dfd87b3bc5a0411432794c1ea5fb6e89d32aed881c"
+        "version": "5adf1cb27cdec3ccff5e23c9f8c7fb5c5b94afd75d1bcf60b1083bf4405ae188",
+        "signature": "5adf1cb27cdec3ccff5e23c9f8c7fb5c5b94afd75d1bcf60b1083bf4405ae188"
       },
       "../src/user/types.d.ts": {
         "version": "91568243b57d7b79b5d879bfe2e00c3094d4f64f4b1ce56189794fa61d5cda7b",
@@ -1974,11 +1974,11 @@
         "signature": "dc38a963b0bb8db47fb6d972d439633ae789d1c92f13b4962647756710b2e041"
       },
       "../src/graphql/resolvers.js": {
-        "version": "c83083315018a87e49e4e832975ddc9402c8a832dc8cbc7564cdbd3a8c720023",
+        "version": "a8e02c17ae71c93e5601432ccb77989725ae274f34a41c00817ad38f2a3f823d",
         "signature": "c0a8125ec92b0a272fd3f4c4a432e176efbbd87400e0f8b538efd048e285152d"
       },
       "../src/graphql/GraphQLServer.js": {
-        "version": "3e0ba142df81dfd0cd5f7f6d31066d34019a6b1cc5b5a4e3721de3146e247225",
+        "version": "bab9d1ef443feafd7bd4bbca7395444c43b5b587b5877269ea5342dda4704425",
         "signature": "758f62162e546f015d667bdbd9b7ab61680ecdb85320eef884fd3f0d54adc163"
       },
       "../src/rest/routes/MetaInformationRoutes.js": {
@@ -2054,7 +2054,7 @@
         "signature": "5bbd6a9793aa9f8f6293376c515ba904a4cd775bbe68d7998eedda6b0f98190a"
       },
       "../start.js": {
-        "version": "2481c227c8b149e318183244dbd4b93f51fd8a951e1097e5cecf6e70fab9d831",
+        "version": "84149ff1729c111bf2a7591fb03e17bf325614484e49c6e09e63cb87c7d3795a",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
       },
       "../../../node_modules/@types/yargs-parser/index.d.ts": {
@@ -7205,10 +7205,10 @@
       "../start.js": [
         "../../logger/index.d.ts",
         "../src/services/gateway/GatewayService.js",
-        "../src/initializer.js",
         "../src/context.ts",
         "../src/config.js",
         "../../../node_modules/@types/node/path.d.ts",
+        "../../../node_modules/@types/node/process.d.ts",
         "../../../node_modules/@types/node/fs.d.ts",
         "../../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../../node_modules/@types/graceful-fs/index.d.ts",

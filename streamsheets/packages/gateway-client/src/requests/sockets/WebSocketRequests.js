@@ -29,6 +29,7 @@ const {
 	UNLOAD_MACHINE_MESSAGE_TYPE,
 	LOAD_SUBSCRIBE_MACHINE_MESSAGE_TYPE,
 	MACHINE_UPDATE_SETTINGS_MESSAGE_TYPE,
+	OPEN_MACHINE_MESSAGE_TYPE,
 	PAUSE_MACHINE_MESSAGE_TYPE,
 	RENAME_MACHINE_MESSAGE_TYPE,
 	STREAMSHEET_STREAM_UPDATE_TYPE,
@@ -374,18 +375,20 @@ class UnsubscribeGraphWebSocketRequest extends WebSocketRequest {
  */
 
 class CreateStreamSheetWebSocketRequest extends WebSocketRequest {
-	constructor(ws, machineId, activeItemId, position) {
+	constructor(ws, machineId, activeItemId, position, sheetType) {
 		super(ws, CREATE_STREAMSHEET_MESSAGE_TYPE);
 		this._machineId = machineId;
 		this._activeItemId = activeItemId;
 		this._position = position;
+		this._sheetType = sheetType;
 	}
 
 	_getConfig() {
 		return {
 			machineId: this._machineId,
 			activeItemId: this._activeItemId,
-			position: this._position
+			position: this._position,
+			sheetType: this._sheetType
 		};
 	}
 }
@@ -482,6 +485,19 @@ class LoadSubscribeMachineWebSocketRequest extends WebSocketRequest {
 			machineId: this._machineId,
 			settings: this._settings,
 			scope: this._scope
+		};
+	}
+}
+
+class OpenMachineWebSocketRequest extends WebSocketRequest {
+	constructor(ws, machineId) {
+		super(ws, OPEN_MACHINE_MESSAGE_TYPE);
+		this._machineId = machineId;
+	}
+
+	_getConfig() {
+		return {
+			machineId: this._machineId
 		};
 	}
 }
@@ -875,6 +891,7 @@ module.exports = {
 	GetMachinesWebSocketRequest,
 	LoadMachineWebSocketRequest,
 	LoadSubscribeMachineWebSocketRequest,
+	OpenMachineWebSocketRequest,
 	PauseMachineWebSocketRequest,
 	RenameMachineWebSocketRequest,
 	UpdateMachineImageWebSocketRequest,

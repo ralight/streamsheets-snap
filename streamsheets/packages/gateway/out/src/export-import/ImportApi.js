@@ -89,7 +89,7 @@ const createMachineImport = ({ mwg, existing, name, oldNewStreamId, oldNewStream
     const toImport = { machine, graph };
     return toImport;
 };
-const doImport = async ({ repositories, api }, scope, importData, machineSelection = [], streamSelection = []) => {
+const doImport = async ({ repositories, api, runFilter }, scope, importData, machineSelection = [], streamSelection = []) => {
     const oldNewConnectorId = new Map();
     const oldNewStreamId = new Map();
     const oldNewStreamName = new Map();
@@ -150,13 +150,13 @@ const doImport = async ({ repositories, api }, scope, importData, machineSelecti
                     graph: await repositories.graphRepository.findGraphByMachineId(existingMachine.id)
                 }
                 : null;
-            return createMachineImport({
+            return runFilter('importMachine', createMachineImport({
                 mwg: selection.mwg,
                 existing,
                 name: selection.newName,
                 oldNewStreamId,
                 oldNewStreamName
-            });
+            }), existing);
         }
         catch (error) {
             logger.info(`Failed to prepare import! Machine#${selection.id}(${selection.newName})`, error.message);
@@ -169,7 +169,7 @@ const doImport = async ({ repositories, api }, scope, importData, machineSelecti
         try {
             logger.info(`Importing Connector#${c.id}(${c.name})`);
             await api.stream.saveStream(scope, c);
-            successfulStreamImports.push(c.name);
+            successfulStreamImports.push({ id: c.id, name: c.name });
         }
         catch (error) {
             logger.info(`Connector import failed! Connector#${c.id}`, error.message);
@@ -179,7 +179,7 @@ const doImport = async ({ repositories, api }, scope, importData, machineSelecti
         try {
             logger.info(`Importing Stream#${s.id}(${s.name})`);
             await api.stream.saveStream(scope, s);
-            successfulStreamImports.push(s.name);
+            successfulStreamImports.push({ id: s.id, name: s.name });
         }
         catch (error) {
             logger.info(`Stream import failed! Stream#${s.id}`, error.message);
@@ -189,8 +189,8 @@ const doImport = async ({ repositories, api }, scope, importData, machineSelecti
         try {
             const { state } = await api.machine.unload(scope, machine.id);
             logger.info(`Importing Machine#${machine.id}(${machine.name}) Graph#${graph.id}`);
-            await api.machine.saveOrUpdate(scope, machine, graph);
-            successfulMachineImports.push(machine.name);
+            const result = await api.machine.saveOrUpdate(scope, machine, graph);
+            successfulMachineImports.push({ id: machine.id, name: machine.name });
             try {
                 if (state === 'running') {
                     await api.machine.load(scope, machine.id);

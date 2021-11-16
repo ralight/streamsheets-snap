@@ -21,12 +21,19 @@ exports.RawAPI = {
 exports.glue = (globalContext, actor) => {
     const rawApi = globalContext.rawApi;
     const rawAuth = globalContext.rawAuth;
+    const filterMap = globalContext.filterMap;
+    const hookMap = globalContext.hookMap;
     const context = {
         ...globalContext,
         actor
     };
     context.api = createApis(rawApi, context);
     context.auth = authorization_1.createAuthorization(rawAuth, context);
+    context.runFilter = (key, toFilter, ...args) => {
+        const filters = filterMap[key];
+        return !filters ? toFilter : filters.reduce(async (result, func) => func(context, await result, ...args), toFilter);
+    };
+    context.runHook = (key, ...args) => { var _a; return (_a = hookMap[key]) === null || _a === void 0 ? void 0 : _a.forEach(func => func(context, ...args)); };
     return context;
 };
 //# sourceMappingURL=glue.js.map

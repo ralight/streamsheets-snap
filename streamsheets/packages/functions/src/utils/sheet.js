@@ -8,6 +8,10 @@
  * SPDX-License-Identifier: EPL-2.0
  *
  ********************************************************************************/
+const { jsonpath } = require('@cedalo/commons');
+const { FunctionErrors } = require('@cedalo/error-codes');
+const { Term } = require('@cedalo/parser');
+const { Cell, Message } = require('@cedalo/machine-core');
 const {
 	isBoxFuncTerm,
 	isInboxTerm,
@@ -17,14 +21,17 @@ const {
 	isOutboxDataTerm,
 	termFromValue
 } = require('./terms');
-const { Term } = require('@cedalo/parser');
-const { jsonpath } = require('@cedalo/commons');
-const { FunctionErrors } = require('@cedalo/error-codes');
-const { Cell, Message } = require('@cedalo/machine-core');
 
 const ERROR = FunctionErrors.code;
 
-const toStaticCell = cell => (cell != null ? new Cell(cell.value, Term.fromValue(cell.value)) : undefined);
+const toStaticCell = (cell) => {
+	let staticCell;
+	if (cell != null) {
+		const value = FunctionErrors.isError(cell.value) ? cell.value.code : cell.value;
+		staticCell = new Cell(value, Term.fromValue(value));
+	}
+	return staticCell;
+};
 
 const cellFromFunc = (func) => {
 	const funcTerm = func.term;
@@ -160,6 +167,14 @@ const setCellValue = (sheet, index, value, keepFormula = false) => {
 		else cell.term = termFromValue(value);
 	}
 };
+const setCellError = (term, errorInfo) => {
+	const cell = term && !term.isDisposed && term.cell;
+	if (cell) {
+		cell.setCellInfo('error', errorInfo);
+		term.cellValue = errorInfo ? errorInfo.code : undefined;
+	}
+};
+
 module.exports = {
 	cellFromFunc,
 	createMessageFromValue,
@@ -174,5 +189,6 @@ module.exports = {
 	getStreamSheetByName,
 	messageFromBox,
 	messageFromBoxOrValue,
-	setCellValue
+	setCellValue,
+	setCellError
 };

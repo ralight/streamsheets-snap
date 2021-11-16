@@ -231,6 +231,7 @@ const typeDefs = gql `
 		success: Boolean!
 		code: String!
 		message: String!
+		info: JSON
 	}
 
 	type CloneResult implements MutationResponse {

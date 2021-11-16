@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2020 Cedalo AG
  *
- * This program and the accompanying materials are made available under the 
+ * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
  *
@@ -20,6 +20,7 @@ import { FunctionObject, MappedFunctionObjectObject, PartialApply1All, FunctionO
 import { Interceptor } from './ws/ProxyConnection';
 import { UserRepository } from './user/UserRepository';
 import { Strategy } from 'passport';
+
 
 export interface GenericGlobalContext<APIS extends { [key: string]: FunctionObject }, AUTH extends FunctionObject> {
 	mongoClient: MongoClient;
@@ -42,6 +43,10 @@ export interface GenericGlobalContext<APIS extends { [key: string]: FunctionObje
 	machineRepo: any;
 	userRepo: UserRepository;
 	streamRepo: StreamRepositoryProxy;
+	filters: { [key: string]: Array<[string, (...args: any) => any]> };
+	filterMap: { [key: string]: Array<(...args: any[]) => any> };
+	hooks: { [key: string]: Array<[string, (...args: any) => any]> };
+	hookMap: { [key: string]: Array<(...args: any[]) => any> };
 	machineServiceProxy: MachineServiceProxy;
 	getRequestContext(globalContext: GlobalContext, session: Session): Promise<RequestContext>;
 	getActor(globalContext: GlobalContext, session: Session): Promise<User>;
@@ -51,11 +56,15 @@ export interface GlobalContext extends GenericGlobalContext<RawAPI, BaseAuth> {}
 
 export interface GenericRequestContext<APIS extends FunctionObjectObject, AUTH extends FunctionObject>
 	extends GenericGlobalContext<APIS, AUTH> {
+	runFilter: <T>(key: string, toFilter: T, ...args: any[]) => T;
+	runHook: (key: string, ...args: any[]) => void;
 	api: MappedFunctionObjectObject<APIS>;
 	auth: PartialApply1All<AUTH>;
 	actor: Actor;
 }
 export interface RequestContext extends GlobalContext {
+	runFilter: <T>(key: string, toFilter: T, ...args: any[]) => T;
+	runHook: (key: string, ...args: any[]) => void;
 	api: Api;
 	auth: Authorization;
 	actor: Actor;

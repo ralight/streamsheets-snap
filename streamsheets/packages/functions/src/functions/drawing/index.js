@@ -9,7 +9,6 @@
  *
  ********************************************************************************/
 const bar = require('./bar');
-const help = require('./help');
 const { Functions } = require('@cedalo/parser');
 
 const {
@@ -18,7 +17,6 @@ const {
 	EVENTS,
 	FILLLINEARGRADIENT,
 	FILLPATTERN,
-	FILLVIDEO,
 	FILLRADIALGRADIENT,
 	FONTFORMAT,
 	LINEFORMAT,
@@ -39,7 +37,6 @@ const {
 } = Functions;
 
 module.exports = {
-	help,
 	functions: {
 		ATTRIBUTES,
 		BAR: bar,
@@ -49,9 +46,9 @@ module.exports = {
 		'DRAW.CHECKBOX': Functions['DRAW.CHECKBOX'],
 		'DRAW.ELLIPSE': Functions['DRAW.ELLIPSE'],
 		'DRAW.LABEL': Functions['DRAW.LABEL'],
+		'DRAW.LAYOUT': Functions['DRAW.LAYOUT'],
 		'DRAW.LINE': Functions['DRAW.LINE'],
 		'DRAW.KNOB': Functions['DRAW.KNOB'],
-		'DRAW.PLOT': Functions['DRAW.PLOT'],
 		'DRAW.STREAMCHART': Functions['DRAW.STREAMCHART'],
 		'DRAW.POLYGON': Functions['DRAW.POLYGON'],
 		'DRAW.BEZIER': Functions['DRAW.BEZIER'],
@@ -60,7 +57,6 @@ module.exports = {
 		EVENTS,
 		FILLLINEARGRADIENT,
 		FILLPATTERN,
-		FILLVIDEO,
 		FILLRADIALGRADIENT,
 		FONTFORMAT,
 		LINEFORMAT,

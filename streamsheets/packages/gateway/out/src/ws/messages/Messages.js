@@ -14,13 +14,14 @@ class CreateGraphMessage extends RequestMessage {
     }
 }
 class CreateStreamSheetMessage extends RequestMessage {
-    constructor({ machineId, streamsheetId, streamsheetName, activeItemId, position }) {
+    constructor({ machineId, streamsheetId, streamsheetName, activeItemId, position, sheetType }) {
         super(CREATE_STREAMSHEET_MESSAGE_TYPE);
         this._machineId = machineId;
         this._streamsheetId = streamsheetId;
         this._streamsheetName = streamsheetName;
         this._activeItemId = activeItemId;
         this._position = position;
+        this._sheetType = sheetType;
     }
     _getConfig() {
         return {
@@ -28,7 +29,8 @@ class CreateStreamSheetMessage extends RequestMessage {
             streamsheetId: this._streamsheetId,
             streamsheetName: this._streamsheetName,
             activeItemId: this._activeItemId,
-            position: this._position
+            position: this._position,
+            sheetType: this._sheetType
         };
     }
 }

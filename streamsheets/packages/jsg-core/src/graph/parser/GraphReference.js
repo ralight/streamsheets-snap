@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2020 Cedalo AG
  *
- * This program and the accompanying materials are made available under the 
+ * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License 2.0 which is available at
  * http://www.eclipse.org/legal/epl-2.0.
  *
@@ -84,26 +84,29 @@ module.exports = class GraphReference extends Reference {
 	 * @return {String} A string description of this reference or the raw reference description if this
 	 * Reference instance is not resolved.
 	 */
-	toString(forItem, useName) {
-		if (this.isResolved() && this._item && this._item.isA === 'GraphItem') {
+	toString(params) {
+		if (this.isResolved() && this._item && this._item.isA() === 'GraphItem') {
 			const propString = this.getPropertyString();
-			if (!forItem) {
-				if (useName) {
+			const id = this._item.getId();
+			if (!params.item) {
+				if (params.useName) {
 					return `${this._item.getName().getValue()}!${propString}`;
 				}
-				return `Item.${this._item.getId()}!${propString}`;
+				if (id !== undefined) {
+					return `Item${id}!${propString}`;
+				}
 			}
 
-			if (forItem === this._item) {
+			if (id === undefined || params.item === this._item) {
 				return propString;
 			}
-			if (forItem._parent === this._item) {
+			if (params.item._parent === this._item) {
 				return `Parent!${propString}`;
 			}
-			if (useName) {
+			if (params.useName) {
 				return `${this._item.getName().getValue()}!${propString}`;
 			}
-			return `Item.${this._item.getId()}!${propString}`;
+			return `Item${id}!${propString}`;
 		}
 		// not resolved => simply return raw string...
 		return this._str;

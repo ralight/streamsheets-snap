@@ -99,7 +99,7 @@ function buildStream (client, opts) {
   var url = buildUrl(opts, client)
   socketTask = wx.connectSocket({
     url: url,
-    protocols: websocketSubProtocol
+    protocols: [websocketSubProtocol]
   })
 
   proxy = buildProxy()
@@ -117,13 +117,13 @@ function buildStream (client, opts) {
     stream.destroy = destroyRef
 
     var self = this
-    process.nextTick(function () {
+    setTimeout(function () {
       socketTask.close({
         fail: function () {
           self._destroy(new Error())
         }
       })
-    })
+    }, 0)
   }.bind(stream)
 
   bindEventHandler()
