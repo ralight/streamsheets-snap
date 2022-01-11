@@ -5,7 +5,7 @@ function toExternal(user) {
     if (!user) {
         return null;
     }
-    const { _id, password, ...copy } = { ...user, id: user._id };
+    const { _id, password, ...copy } = { hadAppTour: false, ...user, id: user._id };
     return copy;
 }
 const toInternalSettings = (settings) => {
@@ -159,6 +159,21 @@ const UserRepository = {
         const userDocument = beforeWrite(gateway_1.applyUpdate(dbUser, { password }));
         const { result } = await collection.replaceOne({ _id: id }, userDocument, hidePassword());
         return result.nModified === 1;
+    },
+    setHadAppTour: async (collection, id, auth = noop) => {
+        try {
+            const dbUser = await collection.findOne({ _id: id });
+            if (!dbUser) {
+                throw gateway_1.InputError.notFound('User does not exist', gateway_1.ErrorCodes.USER_NOT_FOUND);
+            }
+            await auth(toExternal(dbUser));
+            const update = { $set: { hadAppTour: true } };
+            const result = await collection.findOneAndUpdate({ _id: id }, update, hidePassword({ returnOriginal: false }));
+            return toExternal(result.value);
+        }
+        catch (error) {
+            throw error;
+        }
     }
 };
 exports.createUserRepository = (collection) => {

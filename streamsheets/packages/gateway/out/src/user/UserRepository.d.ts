@@ -15,6 +15,7 @@ export interface UserRepository {
     getPassword(username: string): Promise<string>;
     updatePassword(id: ID, password: string): Promise<boolean>;
     updateSettings(id: ID, settingsUpdate: Partial<UserSettings>): Promise<UserFromRepo>;
+    setHadAppTour(id: ID): Promise<UserFromRepo>;
 }
 declare type InternalUser = Omit<UserFromRepo, 'id' | 'settings'> & {
     _id: PropType<UserFromRepo, 'id'>;

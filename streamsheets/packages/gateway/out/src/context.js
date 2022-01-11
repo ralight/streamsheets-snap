@@ -92,7 +92,8 @@ exports.init = async (config, plugins) => {
             username: 'admin',
             password: pwhash,
             settings: { locale: 'en' },
-            admin: true
+            admin: true,
+            hadAppTour: false
         });
     }
     const context = prepareHooks(prepareFilters(await applyPlugins({

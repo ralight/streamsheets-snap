@@ -151,19 +151,11 @@ module.exports = class DefaultApp {
         }
         server.timeout = 10000;
         return new Promise((resolve) => {
-			if(port == 0){
-				server.listen(ipaddress, () => {
-					const name = this.app.locals.pkg.name;
-					logger.info(`${name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
-					resolve(server);
-				});
-			}else{
-				server.listen(port, ipaddress, () => {
-					const name = this.app.locals.pkg.name;
-					logger.info(`${name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
-					resolve(server);
-				});
-			}
+            server.listen(port, ipaddress, () => {
+                const name = this.app.locals.pkg.name;
+                logger.info(`${name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
+                resolve(server);
+            });
         });
     }
 };

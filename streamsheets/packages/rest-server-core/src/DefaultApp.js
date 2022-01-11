@@ -110,23 +110,13 @@ module.exports = class DefaultApp {
 				this._server = http.createServer(this.app);
 			}
 			this._server.timeout = 10000;
-			if(port == 0){
-				this._server.listen(ipaddress, () => {
-					// eslint-disable-next-line
-					logger.info(
-						`${this.app.locals.pkg.name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`
-					);
-					resolve();
-				});
-			}else{
-				this._server.listen(port, ipaddress, () => {
-					// eslint-disable-next-line
-					logger.info(
-						`${this.app.locals.pkg.name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`
-					);
-					resolve();
-				});
-			}
+			this._server.listen(port, ipaddress, () => {
+				// eslint-disable-next-line
+				logger.info(
+					`${this.app.locals.pkg.name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`
+				);
+				resolve();
+			});
 		});
 	}
 

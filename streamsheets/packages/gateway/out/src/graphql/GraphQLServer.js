@@ -120,6 +120,7 @@ const typeDefs = gql `
 		settings: UserSettings!
 		canDelete: Boolean!
 		rights: [String!]!
+		hadAppTour: Boolean!
 	}
 
 	input UserSettingsInput {
@@ -168,6 +169,12 @@ const typeDefs = gql `
 	}
 
 	type DeleteUserPayload implements MutationResponse {
+		success: Boolean!
+		code: String!
+		message: String!
+	}
+
+	type SetHadAppTourPayload implements MutationResponse {
 		success: Boolean!
 		code: String!
 		message: String!
@@ -303,6 +310,7 @@ const typeDefs = gql `
 		deleteUser(id: ID!): DeleteUserPayload!
 		updateUserSettings(id: ID!, settings: UserSettingsInput!): UpdateUserSettingsPayload!
 		updateUserPassword(id: ID!, newPassword: String!): UpdateUserPasswordPayload!
+		setHadAppTour(userId: ID!): SetHadAppTourPayload!
 		scoped(scope: ScopeInput): ScopedMutation!
 		scopedByMachine(machineId: ID!): ScopedMutation!
 		renameMachineFile(machineId: ID!, oldName: String!, newName: String!): RenameMachineFilePayload!

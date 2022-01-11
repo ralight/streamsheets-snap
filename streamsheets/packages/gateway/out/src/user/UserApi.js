@@ -14,6 +14,7 @@ exports.UserApi = {
     createUser: async ({ userRepo }, user) => userRepo.createUser(user),
     updateSettings: async ({ userRepo }, id, settingsUpdate) => userRepo.updateSettings(id, settingsUpdate),
     updatePassword: async ({ userRepo }, id, password) => userRepo.updatePassword(id, password),
+    setHadAppTour: async ({ userRepo }, id) => userRepo.setHadAppTour(id),
     deleteUser: async ({ userRepo }, id) => {
         if (id === '00000000000000') {
             throw __1.AuthError.notAllowed('Cannot delete admin!');

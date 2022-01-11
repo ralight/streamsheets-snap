@@ -1,4 +1,4 @@
 export = MetaInformationRoutes;
 declare class MetaInformationRoutes {
-    static getMetaInformation(request: any, response: any, next: any): void;
+    static getMetaInformation(request: any, response: any, next: any): Promise<void>;
 }

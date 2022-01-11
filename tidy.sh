@@ -48,7 +48,6 @@ DIRS="
 	docs
 	readme
 	.github
-	test
 	"
 
 for a in $DIRS; do

@@ -208,7 +208,8 @@ class ProxyConnection {
         const response = {
             type: 'response',
             requestId: message.requestId || 0,
-            requestType: message.type
+            requestType: message.type,
+            scope: message.scope
         };
         try {
             context = await this._beforeSendToServer(await this.createMessageContext(message));

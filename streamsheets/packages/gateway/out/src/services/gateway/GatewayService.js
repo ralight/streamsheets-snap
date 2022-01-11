@@ -112,8 +112,9 @@ module.exports = class GatewayService extends MessagingService {
         }
         return services;
     }
-    getMetaInfo() {
-        return { services: this.services, licenseInfo: this._licenseInfo };
+    async getMetaInfo(scope) {
+        const licenseInfo = await this.getLicenseInfo(scope);
+        return { services: this.services, licenseInfo };
     }
     getServiceStatus(service) {
         const serviceInformation = this._services.get(service);
@@ -127,6 +128,9 @@ module.exports = class GatewayService extends MessagingService {
     }
     getServicesByType(type) {
         return this.services[type];
+    }
+    async getLicenseInfo() {
+        return this._licenseInfo;
     }
     convertToEvent(service, message) {
         let event = null;

@@ -12,5 +12,6 @@ export declare const UserApi: {
     }) => Promise<import("./UserRepository").UserFromRepo>;
     updateSettings: ({ userRepo }: RequestContext, id: string, settingsUpdate: Partial<UserSettings>) => Promise<import("./UserRepository").UserFromRepo>;
     updatePassword: ({ userRepo }: RequestContext, id: string, password: string) => Promise<boolean>;
+    setHadAppTour: ({ userRepo }: RequestContext, id: string) => Promise<import("./UserRepository").UserFromRepo>;
     deleteUser: ({ userRepo }: RequestContext, id: string) => Promise<void>;
 };

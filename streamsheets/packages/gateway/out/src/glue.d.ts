@@ -29,6 +29,7 @@ export declare const RawAPI: {
         }) => Promise<import("./user/UserRepository").UserFromRepo>;
         updateSettings: ({ userRepo }: import("./streamsheets").RequestContext, id: string, settingsUpdate: Partial<import("./user").UserSettings>) => Promise<import("./user/UserRepository").UserFromRepo>;
         updatePassword: ({ userRepo }: import("./streamsheets").RequestContext, id: string, password: string) => Promise<boolean>;
+        setHadAppTour: ({ userRepo }: import("./streamsheets").RequestContext, id: string) => Promise<import("./user/UserRepository").UserFromRepo>;
         deleteUser: ({ userRepo }: import("./streamsheets").RequestContext, id: string) => Promise<void>;
     };
     machine: {

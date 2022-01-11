@@ -16,12 +16,13 @@ declare class GatewayService {
     notifySendMessageToClient(): void;
     _updateServices(serviceName: any, serviceInformation: any): void;
     get services(): {};
-    getMetaInfo(): {
+    getMetaInfo(scope: any): Promise<{
         services: {};
-        licenseInfo: {};
-    };
+        licenseInfo: any;
+    }>;
     getServiceStatus(service: any): {};
     getServicesByType(type: any): any;
+    getLicenseInfo(): Promise<{}>;
     convertToEvent(service: any, message: any): {
         type: string;
         event: {

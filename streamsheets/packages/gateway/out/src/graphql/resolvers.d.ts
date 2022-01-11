@@ -88,6 +88,11 @@ export namespace resolvers {
         }, { api }: {
             api: any;
         }): Promise<any>;
+        export function setHadAppTour(obj: any, { userId }: {
+            userId: any;
+        }, { api }: {
+            api: any;
+        }): Promise<any>;
         export function scoped_1(obj: any, args: any, { auth }: {
             auth: any;
         }): Promise<{

@@ -35,7 +35,6 @@ module.exports = class RESTServer {
 	_initializeConfiguration(config) {
 		let configuration = Object.assign({}, DEFAULT_CONFIG, config);
 		configuration.http.port = process.env.RESTSERVER_PORT || configuration.http.port;
-		configuration.http.ipaddress = process.env.RESTSERVER_HOST || configuration.http.ipaddress;
 		configuration = this._postConfig(configuration);
 		return configuration;
 	}

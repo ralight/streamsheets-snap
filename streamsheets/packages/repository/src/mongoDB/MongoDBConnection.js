@@ -49,8 +49,8 @@ const authMechanism = `authMechanism=SCRAM-SHA-1`;
 
 const buildUrl = ({ host, port, database }, auth) =>
 	auth
-		? `mongodb://${auth}@%2Fvar%2Fsnap%2Fstreamsheets%2Fcommon%2Fmongodb.sock/${database}?${authMechanism}`
-		: `mongodb://%2Fvar%2Fsnap%2Fstreamsheets%2Fcommon%2Fmongodb.sock/${database}`;
+		? `mongodb://${auth}@${host}:${port}/${database}?${authMechanism}`
+		: `mongodb://${host}:${port}/${database}`;
 
 const buildAuth = (username, password) =>
 	username && password ? `${username}:${password}` : undefined;

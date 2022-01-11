@@ -92,6 +92,11 @@ export const resolvers: {
         }, { api }: {
             api: any;
         }) => Promise<any>;
+        setHadAppTour: (obj: any, { userId }: {
+            userId: any;
+        }, { api }: {
+            api: any;
+        }) => Promise<any>;
         scoped: (obj: any, args: any, { auth }: {
             auth: any;
         }) => Promise<{
