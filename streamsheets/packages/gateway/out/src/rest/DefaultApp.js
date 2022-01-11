@@ -150,13 +150,24 @@ module.exports = class DefaultApp {
             server = http.createServer(this.app);
         }
         server.timeout = 10000;
-        return new Promise((resolve) => {
-            server.listen(port, ipaddress, () => {
-                const name = this.app.locals.pkg.name;
-                logger.info(`${name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
-                resolve(server);
-            });
-        });
+		if(port == 0){
+			return new Promise((resolve) => {
+				server.listen(ipaddress, () => {
+					const name = this.app.locals.pkg.name;
+					logger.info(`${name} started at ${new Date()}. Socket path : ${ipaddress}`);
+					resolve(server);
+				});
+			});
+		}
+		else {
+			return new Promise((resolve) => {
+				server.listen(port, ipaddress, () => {
+					const name = this.app.locals.pkg.name;
+					logger.info(`${name} started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
+					resolve(server);
+				});
+			});
+		}
     }
 };
 //# sourceMappingURL=DefaultApp.js.map
