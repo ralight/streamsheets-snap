@@ -50,9 +50,6 @@ module.exports = class MqttConnector extends sdk.Connector {
 		};
 		const options = {
 			protocolVersion: this.config.connector.protocolVersion || 5,
-			properties: {
-				maximumPacketSize: 2000
-			},
 			connectTimeout: 10 * 1000,
 			keepalive: 10,
 			reconnectPeriod: -1,
