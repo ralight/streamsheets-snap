@@ -176,7 +176,7 @@ parts:
 
   node:
     plugin: npm
-    npm-node-version: 14.16.1
+    npm-node-version: 16.20.2
     source: dummy
     prime:
       - -include/

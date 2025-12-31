@@ -23,6 +23,10 @@ sudo snap set streamsheets port=8082
 sudo systemctl restart snap.streamsheets.nginx
 ```
 
+## Credentials
+
+The default credentials for logging in are admin:1234
+
 ## TODO
 
 * Update nginx to use https://snapcraft.io/docs/snap-layouts with distro
