@@ -53,7 +53,7 @@
     "http-errors": "1.5.1",
     "ioredis": "4.6.2",
     "jasmine-expect": "^4.0.3",
-    "jsonwebtoken": "7.4.1",
+    "jsonwebtoken": "9.0.0",
     "mkdirp": "0.5.1",
     "mongodb": "3.0.11",
     "morgan": "1.9.1",
